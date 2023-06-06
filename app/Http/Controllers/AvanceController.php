@@ -12,6 +12,8 @@ use App\Models\imgConceptos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 use PhpParser\Node\Stmt\Return_;
 use Barryvdh\DomPDF\Facade as PDF;
 use Dompdf\Dompdf;
@@ -49,6 +51,7 @@ class AvanceController extends Controller
     public function store(Request $request)
     {
         //
+        
     }
 
     /**
@@ -155,6 +158,92 @@ class AvanceController extends Controller
         return view('avances.editaravance',compact('l','ap','an','vt','are','al','es','pie','avance','dato'));
     }
 
+    public function showd($id)
+    {
+     
+      //Datos de mi avance
+        $dato=Dato::find($id);
+
+        // return $dato;
+
+    //Opciones seleccionadas de mi formulario
+    $avance=Avance::where('id','=',$dato->id_avance)->first();
+
+    // return $avance;
+    $l=$avance->localizacion;
+    $ap=$avance->anchoM;
+    $an=$avance->anchoP;
+    $vt=$avance->volumenT;
+    $are=$avance->area;
+    $al=$avance->altura;
+    $es=$avance->espesor;
+    $pie=$avance->pieza;
+
+    //$showd=PDF::loadView('avances.veravance',['l'=>$l,'ap'=>$ap,'an'=>$an,'vt'=>$vt,'are'=>$are,'al'=>$al,'es'=>$es,'pie'=>$pie,'avance'=>$avance,'dato'=>$dato]);
+
+    //$showd->setPaper('A4', 'landscape');
+
+    //return $showd->stream('');
+
+    return view('avances.veravance',compact('l','ap','an','vt','are','al','es','pie','avance','dato'));
+    }
+
+    /*
+    public function PDFHD($id)
+    {
+     
+      //Datos de mi avance
+        $dato=Dato::find($id);
+
+        // return $dato;
+
+    //Opciones seleccionadas de mi formulario
+    $avance=Avance::where('id','=',$dato->id_avance)->first();
+
+    // return $avance;
+    $l=$avance->localizacion;
+    $ap=$avance->anchoM;
+    $an=$avance->anchoP;
+    $vt=$avance->volumenT;
+    $are=$avance->area;
+    $al=$avance->altura;
+    $es=$avance->espesor;
+    $pie=$avance->pieza;
+
+    $PDFHD=PDF::loadView('avances.pdfhd',compact('l','ap','an','vt','are','al','es','pie','avance','dato'));
+    
+
+      $PDFHD->setPaper('A4', 'landscape');
+
+      return $PDFHD->stream('REPORTE.pdf');
+
+        //return view('avances.pdfhd',compact('l','ap','an','vt','are','al','es','pie','avance','dato'));
+    }
+    */
+
+    public function showi($id){
+        
+        //Datos de mi avance
+        $dato=Dato::find($id);
+  
+    //Opciones seleccionadas de mi formulario
+    $avance=Avance::where('id','=',$dato->id_avance)->first();
+  
+    // return $avance;
+    $l=$avance->localizacion;
+    $ap=$avance->anchoM;
+    $an=$avance->anchoP;
+    $vt=$avance->volumenT;
+    $are=$avance->area;
+    $al=$avance->altura;
+    $es=$avance->espesor;
+    $pie=$avance->pieza;
+  
+        return view('avances.veravanceI',compact('l','ap','an','vt','are','al','es','pie','avance','dato'));
+  
+  
+      }
+
     /**
      * Update the specified resource in storage.
      *
@@ -172,11 +261,90 @@ class AvanceController extends Controller
         if($dato->hombro_derecho1==null  && $dato->hombro_derecho2==null){
             $dato->hombro_izquierdo1=$request->hombro_izquierdo1;
             $dato->hombro_izquierdo2=$request->hombro_izquierdo2;
+            $dato->concepto=$request->concepto;
 
         }else{
             $dato->hombro_derecho1=$request->hombro_derecho1;
             $dato->hombro_derecho2=$request->hombro_derecho2;
+            $dato->concepto=$request->concepto;
       
+        }
+
+        //return File::delete(app_path().'/img/avance/'.$dato->newimg);
+            
+        if($request->hasFile("newimg")){
+            
+            //Storage::delete('img/avance/'.$dato->newimg);
+            //File::delete(app_path().'/img/avance/'.$dato->newimg);
+            //$filedeleted = unlink(app_path().'img/avance/'.$dato->newimg);
+            File::delete(public_path('img/avance/'.$dato->newimg));
+
+            $imagen=$request->file("newimg");
+            $nombreImagen=strtotime(now()).rand(11111,99999).'.'.$imagen->guessExtension();
+            $ruta=public_path("img/avance");
+            $imagen->move($ruta,$nombreImagen);
+            $dato->newimg=$nombreImagen;
+
+        }
+
+        if($request->hasFile("newimg2")){
+            
+            //Storage::delete('img/avance/'.$dato->newimg);
+            //File::delete(app_path().'/img/avance/'.$dato->newimg);
+            //$filedeleted = unlink(app_path().'img/avance/'.$dato->newimg);
+            File::delete(public_path('img/avance/'.$dato->newimg2));
+
+            $imagen=$request->file("newimg2");
+            $nombreImagen=strtotime(now()).rand(11111,99999).'.'.$imagen->guessExtension();
+            $ruta=public_path("img/avance");
+            $imagen->move($ruta,$nombreImagen);
+            $dato->newimg2=$nombreImagen;
+
+        }
+
+        if($request->hasFile("newimg3")){
+            
+            //Storage::delete('img/avance/'.$dato->newimg);
+            //File::delete(app_path().'/img/avance/'.$dato->newimg);
+            //$filedeleted = unlink(app_path().'img/avance/'.$dato->newimg);
+            File::delete(public_path('img/avance/'.$dato->newimg3));
+
+            $imagen=$request->file("newimg3");
+            $nombreImagen=strtotime(now()).rand(11111,99999).'.'.$imagen->guessExtension();
+            $ruta=public_path("img/avance");
+            $imagen->move($ruta,$nombreImagen);
+            $dato->newimg3=$nombreImagen;
+
+        }
+
+        if($request->hasFile("newimg4")){
+            
+            //Storage::delete('img/avance/'.$dato->newimg);
+            //File::delete(app_path().'/img/avance/'.$dato->newimg);
+            //$filedeleted = unlink(app_path().'img/avance/'.$dato->newimg);
+            File::delete(public_path('img/avance/'.$dato->newimg4));
+
+            $imagen=$request->file("newimg4");
+            $nombreImagen=strtotime(now()).rand(11111,99999).'.'.$imagen->guessExtension();
+            $ruta=public_path("img/avance");
+            $imagen->move($ruta,$nombreImagen);
+            $dato->newimg4=$nombreImagen;
+
+        }
+
+        if($request->hasFile("newimg5")){
+            
+            //Storage::delete('img/avance/'.$dato->newimg);
+            //File::delete(app_path().'/img/avance/'.$dato->newimg);
+            //$filedeleted = unlink(app_path().'img/avance/'.$dato->newimg);
+            File::delete(public_path('img/avance/'.$dato->newimg5));
+
+            $imagen=$request->file("newimg5");
+            $nombreImagen=strtotime(now()).rand(11111,99999).'.'.$imagen->guessExtension();
+            $ruta=public_path("img/avance");
+            $imagen->move($ruta,$nombreImagen);
+            $dato->newimg5=$nombreImagen;
+
         }
         
         $avance=Avance::where('id','=',$dato->id_avance)->first();
@@ -376,7 +544,8 @@ class AvanceController extends Controller
      
     }
 
-    public function veravance($id){
+    public function veravance($id, Request $request){
+
 
         $avance=Avance::find($id);
         $concepto=Concepto::where('id','=',$avance->id_concepto)->first();
@@ -392,15 +561,41 @@ class AvanceController extends Controller
         $pie=$avance->pieza;
         $es=$avance->espesor;
         $are=$avance->area;
+        $fechainicio=date("2023-04-01");
 
         //avance
+        $consultaFecha=true;
 
-        $datosG=Dato::where('id_avance','=',$avance->id)
+        if($request->bday && $request->dateFin){
+            $consultaFecha=false;
+        }
+
+        
+
+        if($consultaFecha){
+            $datosG=Dato::where('id_avance','=',$avance->id)
         ->where('hombro_izquierdo1','=',null)->where('hombro_izquierdo2','=',null)->get();
 
         $datosD=Dato::where('id_avance','=',$avance->id)
         ->where('hombro_derecho1','=',null)->where('hombro_derecho2','=',null)->whereNotNull('hombro_izquierdo1')
         ->whereNotNull('hombro_izquierdo2')->get();
+        }
+        else{
+            $datosG=Dato::where('id_avance','=',$avance->id)
+        ->where('hombro_izquierdo1','=',null)->where('hombro_izquierdo2','=',null)
+        ->whereBetween('updated_at',[$request->bday, $request->dateFin])
+        ->get();
+
+        $datosD=Dato::where('id_avance','=',$avance->id)
+        ->where('hombro_derecho1','=',null)->where('hombro_derecho2','=',null)->whereNotNull('hombro_izquierdo1')
+        ->whereNotNull('hombro_izquierdo2')
+        ->whereBetween('updated_at',[$request->bday, $request->dateFin])
+        ->get();
+        }
+        
+
+        //$datosF=Dato::where('id_avance','=',$avance->id)
+        //->get();
 
         
         // si existen datos ya 
@@ -412,7 +607,7 @@ class AvanceController extends Controller
 
         // return $l;
 
-        return view('avances.tablaavance',compact('l','an','al','ap','vtt','are','pie','es','avance','datosG','datosD','concepto'));
+        return view('avances.tablaavance',compact('l','an','al','ap','vtt','are','pie','es','avance','datosG','datosD','concepto','fechainicio','request'));
     }
 
 
@@ -461,6 +656,7 @@ class AvanceController extends Controller
 
         $dato->hombro_derecho1=$request->hombro_derecho1;
         $dato->hombro_derecho2=$request->hombro_derecho2;
+        $dato->concepto=$request->concepto;
     
         $dato->ancho1=$request->ancho1;
         $dato->ancho2=$request->ancho2;
@@ -472,6 +668,53 @@ class AvanceController extends Controller
 
         $dato->id_concepto=$avance->id_concepto;
         $dato->id_avance=$avance->id;
+
+
+
+        if($request->hasFile("newimg")){
+            $imagen=$request->file("newimg");
+            $nombreImagen=strtotime(now()).rand(11111,99999).'.'.$imagen->guessExtension();
+            $ruta=public_path("img/avance");
+            $imagen->move($ruta,$nombreImagen);
+            $dato->newimg=$nombreImagen;
+
+        }
+        
+        if($request->hasFile("newimg2")){
+            $imagen=$request->file("newimg2");
+            $nombreImagen=strtotime(now()).rand(11111,99999).'.'.$imagen->guessExtension();
+            $ruta=public_path("img/avance");
+            $imagen->move($ruta,$nombreImagen);
+            $dato->newimg2=$nombreImagen;
+
+        }
+
+        if($request->hasFile("newimg3")){
+            $imagen=$request->file("newimg3");
+            $nombreImagen=strtotime(now()).rand(11111,99999).'.'.$imagen->guessExtension();
+            $ruta=public_path("img/avance");
+            $imagen->move($ruta,$nombreImagen);
+            $dato->newimg3=$nombreImagen;
+
+        }
+
+        if($request->hasFile("newimg4")){
+            $imagen=$request->file("newimg4");
+            $nombreImagen=strtotime(now()).rand(11111,99999).'.'.$imagen->guessExtension();
+            $ruta=public_path("img/avance");
+            $imagen->move($ruta,$nombreImagen);
+            $dato->newimg4=$nombreImagen;
+
+        }
+
+        if($request->hasFile("newimg5")){
+            $imagen=$request->file("newimg5");
+            $nombreImagen=strtotime(now()).rand(11111,99999).'.'.$imagen->guessExtension();
+            $ruta=public_path("img/avance");
+            $imagen->move($ruta,$nombreImagen);
+            $dato->newimg5=$nombreImagen;
+
+        }
 
         $dato->save();
 
@@ -492,6 +735,7 @@ class AvanceController extends Controller
 
         $dato->hombro_izquierdo1=$request->hombro_izquierdo1;
         $dato->hombro_izquierdo2=$request->hombro_izquierdo2 ;
+        $dato->concepto=$request->concepto;
         
         // return $request->all();
         $dato->ancho1=$request->ancho1;
@@ -502,8 +746,54 @@ class AvanceController extends Controller
         $dato->pieza=$request->pieza;
         $dato->espesor=$request->espesor;
 
-        $dato->id_concepto=$avance->id_concepto;
+            $dato->id_concepto=$avance->id_concepto;
         $dato->id_avance=$avance->id;
+
+
+        if($request->hasFile("newimg")){
+            $imagen=$request->file("newimg");
+            $nombreImagen=strtotime(now()).rand(11111,99999).'.'.$imagen->guessExtension();
+            $ruta=public_path("img/avance");
+            $imagen->move($ruta,$nombreImagen);
+            $dato->newimg=$nombreImagen;
+
+        }
+        
+        if($request->hasFile("newimg2")){
+            $imagen=$request->file("newimg2");
+            $nombreImagen=strtotime(now()).rand(11111,99999).'.'.$imagen->guessExtension();
+            $ruta=public_path("img/avance");
+            $imagen->move($ruta,$nombreImagen);
+            $dato->newimg2=$nombreImagen;
+
+        }
+
+        if($request->hasFile("newimg3")){
+            $imagen=$request->file("newimg3");
+            $nombreImagen=strtotime(now()).rand(11111,99999).'.'.$imagen->guessExtension();
+            $ruta=public_path("img/avance");
+            $imagen->move($ruta,$nombreImagen);
+            $dato->newimg3=$nombreImagen;
+
+        }
+
+        if($request->hasFile("newimg4")){
+            $imagen=$request->file("newimg4");
+            $nombreImagen=strtotime(now()).rand(11111,99999).'.'.$imagen->guessExtension();
+            $ruta=public_path("img/avance");
+            $imagen->move($ruta,$nombreImagen);
+            $dato->newimg4=$nombreImagen;
+
+        }
+
+        if($request->hasFile("newimg5")){
+            $imagen=$request->file("newimg5");
+            $nombreImagen=strtotime(now()).rand(11111,99999).'.'.$imagen->guessExtension();
+            $ruta=public_path("img/avance");
+            $imagen->move($ruta,$nombreImagen);
+            $dato->newimg5=$nombreImagen;
+
+        }
 
         $dato->save();
         
@@ -534,8 +824,9 @@ class AvanceController extends Controller
 
     }
 
-    public function createPDF($id)
+    public function createPDF($id, Request $request)
     {
+        
      
     $avancef=Avance::find($id);
 
@@ -570,6 +861,8 @@ class AvanceController extends Controller
             $img->imagen='sinimg.png';
             $conceptosimg[2]=$img;
          }
+
+         
          
     $conceptopp=Concepto::where('id','=',$conceptop->id_codigo)->first();
     $conceptoppp=Concepto::where('id','=',$conceptopp->id_codigo)->first();
@@ -585,12 +878,20 @@ class AvanceController extends Controller
         $l=$avancef->localizacion;$an=$avancef->anchoM;$al=$avancef->altura;$ap=$avancef->anchoP;
         $vtt=$avancef->volumenT;$pie=$avancef->pieza;$es=$avancef->espesor;$are=$avancef->area;
 
+        $from = date('2023-04-03');
+        $to = date('2023-04-11');
+        // $from = date("yyyy-mm-dd", strtotime($request->bday ));
+        // $to = date("yyyy-mm-dd", strtotime($request->dateFin));
         $datosG=Dato::where('id_avance','=',$avancef->id)
-        ->where('hombro_izquierdo1','=',null)->where('hombro_izquierdo2','=',null)->get();
+        ->where('hombro_izquierdo1','=',null)->where('hombro_izquierdo2','=',null)
+         ->whereBetween('updated_at',[$from, $to])
+        ->get();
 
         $datosD=Dato::where('id_avance','=',$avancef->id)
         ->where('hombro_derecho1','=',null)->where('hombro_derecho2','=',null)->whereNotNull('hombro_izquierdo1')
-        ->whereNotNull('hombro_izquierdo2')->get();
+        ->whereNotNull('hombro_izquierdo2')
+         ->whereBetween('updated_at',[$from, $to])
+        ->get();
 
         $concepto=Concepto::where('id','=',$avancef->id_concepto)->first();
         //contrato
@@ -930,6 +1231,21 @@ class AvanceController extends Controller
             unset($imagen['imagen']);
         }
 
+        if($request->hasFile("imagen")){
+            
+            //Storage::delete('img/avance/'.$dato->newimg);
+            //File::delete(app_path().'/img/avance/'.$dato->newimg);
+            //$filedeleted = unlink(app_path().'img/avance/'.$dato->newimg);
+            File::delete(public_path('img/avance/'.$img->imagen));
+
+            $imagen=$request->file("imagen");
+            $nombreImagen=strtotime(now()).rand(11111,99999).'.'.$imagen->guessExtension();
+            $ruta=public_path("img/avance");
+            $imagen->move($ruta,$nombreImagen);
+            $img->imagen=$nombreImagen;
+
+        }
+
         $img->id_avance=$request->id_avance;
         $img->ip=$request->ip; 
         $img->country=$request->country; 
@@ -962,6 +1278,12 @@ class AvanceController extends Controller
 
 
          return redirect()->route('Avance.show',$avance->id_concepto);
+    }
+
+    public function buscarfecha(){
+
+
+
     }
 
 /*

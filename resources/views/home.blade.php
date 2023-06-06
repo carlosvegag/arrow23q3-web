@@ -136,7 +136,7 @@
         @if($validacion->confirmed==1)
         <div class="row clearfix">
             @if($rol->name=="Tenant")
-            <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="col-lg-3 col-md-6 col-sm-12" style="font-size: 1rem;">
                 <div class="card">
                     <div class="body">
                         

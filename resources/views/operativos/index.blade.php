@@ -13,7 +13,7 @@
                 <a href="{{route('operativos.create')}}" class="btn btn-raised btn-success">Agregar usuario</a>
                 @endcan
                 <a class="btn btn-sm btn-raised btn-primary" href="{{ route('operativos.createPDF') }}">Exportar a PDF <i class="material-icons" style=" margin-bottom: 8px;">file_download</i> </a>
-                 
+                <a href="{{ route('contratos.index')}}" class="btn btn-raised btn-default waves-effect">Ver contratos</a>
             </div>
         </div>
 

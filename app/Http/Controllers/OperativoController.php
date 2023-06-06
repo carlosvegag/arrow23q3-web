@@ -199,7 +199,8 @@ class OperativoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    /*
+    public function store(Request $request, $id, $modal)
     {
 
         // return $request->all();
@@ -254,6 +255,83 @@ class OperativoController extends Controller
             $usuario->assignRole($consulta->id);
 
             $mensaje="Usuario registrado exitosamente.";
+
+            if($modal=null || $modal=="0"){
+
+                return redirect()->route('operativos.index')->with(compact('mensaje'));
+    
+            } else {
+                
+                return view('contratos.editar');
+                
+             }
+
+
+            
+
+        }else{
+            $mensaje="¡ERROR!, por favor selecciona un Rol";
+            return back()->withInput()->with(compact('mensaje'));
+        }
+
+     
+    }
+    */
+    public function store(Request $request)
+    {
+
+        // return $request->all();
+
+        $this->validate($request,
+        [
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|same:confirm-password',
+            'photo' => 'required',
+            'roles' => 'required',
+            
+        ],
+        [
+            'name.required' => 'El campo nombre debe ser obligatorio',
+            'email.unique' => 'El email ingresado ya esta en uso'
+        ]
+        
+         );
+
+        //  return $request->all();
+
+        $rol=$request->input(['roles']);
+
+        // return var_dump( $request->input(['roles']));
+       
+        if($rol !="0"  ){
+
+            $rol=$request->input(['roles']);
+            $consulta=Role::select('id')->where('name','like',$rol)->first();
+    
+
+            //obtenemos id del tenant
+
+            $id_tenant=User::select('id_tenant')->where('id','=',Auth::id())->first();
+            $usuario= new User;
+            $usuario->name=$request->name;
+            $usuario->email=$request->email;
+            $usuario->password=bcrypt($request->input('password'));
+            $usuario->id_tenant=$id_tenant->id_tenant;
+            $usuario->empresa=$request->input('empresa');
+            $request->hasFile("photo");
+            $imagen=$request->file("photo");
+            $nombreImagen=strtotime(now()).rand(11111,99999).'.'.$imagen->guessExtension();
+            $ruta=public_path("img/usuarios");
+            $imagen->move($ruta,$nombreImagen);
+            $usuario->photo=$nombreImagen;
+            $usuario->confirmed=true;
+
+
+            $usuario->save();
+            $usuario->assignRole($consulta->id);
+
+            $mensaje="Usuario registrado exitosamente.";           
             return redirect()->route('operativos.index')->with(compact('mensaje'));
 
         }else{
@@ -459,5 +537,47 @@ class OperativoController extends Controller
         return redirect()->route('operativos.index');
 
 
+    }
+
+
+    public function newcreate()
+    {
+        $id=Auth::id();
+
+        $rol=DB::table('users')->join('model_has_roles','users.id','=','model_has_roles.model_id')
+        ->join('roles','roles.id','=','model_has_roles.role_id')
+        ->select('roles.name')
+        ->where('users.id','=',$id)->first();
+        $usuario=DB::table('users')->where('id','=',$id)->first();
+        $tenant=DB::table('users')->where('id',$usuario->id_tenant)->first();
+       
+
+        if($rol->name=='Tenant'){
+            $roles=Role::select('id','name')->whereNotIn('name',['Tenant','Responsable de obra', 'Asistente de obra'])->get();
+        }else if($rol->name=='Responsable de empresa'){
+            //$roles=Role::select('id','name')->whereNotIn('name',['Tenant','Responsable de empresa'])->where('id_tenant', '=', $tenant->id)->orWhere('id_tenant', '=', NULL)->get();
+
+            $roles=Role::select('id','name')->where('id_tenant', '=', $tenant->id)
+            ->orWhere(function($query) {
+                $query->whereNotIn('name',['Tenant','Responsable de empresa'])
+                      ->Where('id_tenant', '=', NULL);
+            })->get();
+        }
+
+        
+        $empresasus=DB::table('users')->select('empresa')->where('id','=',$id)->first();
+        $e=json_encode($empresasus->empresa);
+        $emp=str_replace('"', " ", $e);
+        $empre=explode(", ", $emp);
+        $empresas= [];
+        foreach($empre as $clave=>$valor){
+            $empresassel=DB::table('empresas')
+            ->where('id','=',$valor)->get()->toArray();
+            $empresas = array_merge_recursive($empresas, $empresassel);
+        }
+        unset($valor);
+
+
+        return view('operativos.newforms',compact('roles','empresas'));
     }
 }

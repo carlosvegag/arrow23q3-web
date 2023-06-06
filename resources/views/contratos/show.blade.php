@@ -60,37 +60,9 @@
                                   {{$contratoUnion->ubicacion}}<br>
 
                                   </address>
-                                  <address>
-                                    <strong>Responsable de obra:</strong><br>
-                                    {{$contratoUnion->name}}<br>
-
-                                    </address>
-
-                                    <address>
-                                        <strong>Asistente de obra:</strong><br>
-                                        {{$asistente->asistente_name}}<br>
-
-                                        </address>
+                                  
                             </div>
                             <br>
-
-
-
-
-
-                            <div class="float-right mt-20">
-                                <p><strong>Fecha de alta contrato: </strong>{{$contratoUnion->fecha_alta}}</p>
-                                <p><strong>Fecha de inicio: </strong>{{$contratoUnion->fecha_inicio}}</p>
-                                <p><strong>Fecha de termino: </strong>{{$contratoUnion->fecha_termino}}</p>
-
-                                @if ($contratoUnion->estatus !=1)
-                                <p class="m-t-10"><strong>Status: </strong> <span class="badge bg-green">Activo</span></p>
-                                @else
-                                <p class="m-t-10"><strong>Status: </strong> <span class="badge bg-red">Inactivo</span></p>
-
-                                @endif
-
-                            </div>
                         </div>
                     </div>
                     <div class="mt-40"></div><br>
@@ -148,8 +120,12 @@
 
                             <hr>
                             <a href="javascript:window.print()" class="btn btn-raised btn-success m-auto"  ><i class="zmdi zmdi-print"></i></a>
-                            <a href="{{route('contratos.edit',$contratoUnion->contrato_id)}}"  class=" m-auto btn btn-raised btn-warning">Editar</a>
-
+                            <!--se elimina el boton de editar y se coloca abajo-->
+                            <a class="btn btn-sm btn-raised btn-primary m-auto mt-5"  href="{{route('finaciero.createPDF',$contratoUnion->contrato_id)}}">Reporte Finaciero <i class="material-icons" style=" margin-bottom: 8px;">file_download</i> </a>
+                            
+                            </a>
+                        
+                            
                             <a href="{{ route('contratos.imagen',$contratoUnion->contrato_id) }}" class="btn btn-raised btn-info">Agregar Imagen </a>
                             <a href="{{route('contratos.index')}}" class="btn btn-raised btn-success m-auto" >Regresar</a>
 
@@ -168,11 +144,6 @@
                   
 
                     </div>
-
-                    <div class="row">
-                        <div class="col-12  text-center mt-4">
-                            <a class="btn btn-sm btn-raised btn-primary m-auto mt-5"  href="{{route('finaciero.createPDF',$contratoUnion->contrato_id)}}">Reporte Finaciero <i class="material-icons" style=" margin-bottom: 8px;">file_download</i> </a>
-                        </div>
 
                     </div>
                     
@@ -194,6 +165,44 @@
                                 
                             </div>
                             @endforeach
+
+                            <!--hacer tabla de aqui *****-->
+                            <div class="float-right mt-20">
+
+                                <address>
+                                    <strong>Responsable de obra:</strong><br>
+                                    {{$contratoUnion->name}}<br>
+
+                                    </address>
+                                    
+
+                                    <address>
+                                        <strong>Asistente de obra:</strong><br>
+                                        {{$asistente->asistente_name}}<br>
+
+                                        </address>
+
+
+                            
+                                <p><strong>Fecha de alta contrato: </strong>{{$contratoUnion->fecha_alta}}</p>
+                                <p><strong>Fecha de inicio: </strong>{{$contratoUnion->fecha_inicio}}</p>
+                                <p><strong>Fecha de termino: </strong>{{$contratoUnion->fecha_termino}}</p>
+
+                                @if ($contratoUnion->estatus !=1)
+                                <p class="m-t-10"><strong>Status: </strong> <span class="badge bg-green">Activo</span></p>
+                                @else
+                                <p class="m-t-10"><strong>Status: </strong> <span class="badge bg-red">Inactivo</span></p>
+
+                                @endif
+
+
+                            </div>                            
+
+                            <!--***** aqui-->
+                            <a href="{{route('contratos.edit',$contratoUnion->contrato_id)}}"  class=" m-auto btn btn-raised btn-warning">Editar</a>
+
+                            <br>
+                            
 
                      
                     </div>

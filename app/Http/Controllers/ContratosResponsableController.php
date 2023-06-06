@@ -43,7 +43,7 @@ class ContratosResponsableController extends Controller
         //  return $contratos;
 
       
-        return view('contratosR.contratos',compact('contratos'));
+       return view('contratosR.contratos',compact('contratos'));
 
 
 

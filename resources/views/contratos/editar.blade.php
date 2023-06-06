@@ -156,6 +156,10 @@
                                     @endforeach 
                                 </select>
                             </div>
+
+
+
+
                             <div class="col-sm-6 focused mt-3">
                             <strong> Responsable de obra </strong>
                                 <select class="form-control show-tick" name="id_responsable">
@@ -173,14 +177,41 @@
                         <option value="{{$asis->id}}" @if ($asistente->asistente_id == $asis->id)  selected  @endif >{{$asis->name}}</option>
                                     @endforeach 
                                 </select>
+                                
                             </div>
+
+                            
+
                         <br>
                         <br>
+
+
+
                     
     <div class="col-sm-12 mt-4 d-flex justify-content-center">
         <button type="submit" class="btn btn-raised g-bg-blush2">Editar</button>
         <a href="{{route('contratos.show',$contrato->id)}}" class="btn btn-raised btn-default waves-effect">Cancelar</a>
+        <!--@can('crear-operativo')
+        
+                <a href="{{route('operativos.create')}}" class="btn btn-raised btn-success">Agregar responsable/asistente</a>
+                @endcan
+-->
+
+<a data-path="{{route('operativos.create',$contrato->id)}}" 
+   data-id="{{$contrato->id}}"
+   class="btn btn-raised btn-default waves-effect load-ajax-modal" 
+   role="button" 
+   data-toggle="modal" data-target="#dynamic-modal">
+   Agregar responsable/asistente
+</a>
+
+                
+        
     </div>   
+<div>
+
+
+</div>
 </div>
 </form>
                         </div>
@@ -224,7 +255,22 @@ $(function(){
 
         
     });
+    $('.load-ajax-modal').click(function(){
 
+$.ajax({
+    type : 'GET',
+    url : $(this).data('path'),
+    success: function(result) {
+        $('#dynamic-modal div.modal-body').html(result);
+        $('#dynamic-modal div.modal-body #leftsidebar').hide();
+        $('#dynamic-modal div.modal-body .navbar').hide();
+        $('#dynamic-modal div.modal-body .color-bg').hide();
+        $('#dynamic-modal div.modal-body .content').css("margin", "unset");
+        $('#dynamic-modal div.modal-body #boton').data( "modal",1);
+        $('#dynamic-modal div.modal-body #boton').data( "id",$(this).data('id'));
+    }
+});
+});
     $('#fecha_termino').change(()=>{
         $termino=$("#fecha_termino").val();
         console.log($inicio);   

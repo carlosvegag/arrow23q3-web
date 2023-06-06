@@ -143,7 +143,7 @@
      
 
         <table class="table table-bordered " border="5">
-            <thead>
+            <head>
               <tr>
               
                 <th>Periodo de ejecucion</th>
@@ -155,8 +155,8 @@
                 <th scope="col">Amortización</th>
                 <th scope="col">Importe Liquido</th>
               </tr>
-            </thead>
-            <tbody>
+            </head>
+            <body>
               <tr>
 
                 <?php $iva=($contrato->importe)*.016; $dos=($dos=$contrato->importe)*.02;
@@ -205,7 +205,7 @@
                   <td><?php echo "$ ".number_format( $liquido, 2, '.', ',');?></td>
               </tr>
              
-            </tbody>
+            </body>
           </table>
      
       

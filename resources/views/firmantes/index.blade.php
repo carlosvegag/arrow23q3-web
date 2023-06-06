@@ -34,9 +34,10 @@
                             <thead>
                                 <tr>
                                    
+                                    <th class="text-center">Tipo de empleado</th>
                                     <th class="text-center">Nombre de firmante</th>
                                     <th class="text-center">Cargo</th>
-                                    <th class="text-center">Contrato</th>
+                                    <!--se elimina la columna de contrato -->
 
 
                                     <th class="text-center">Acciones</th>
@@ -50,9 +51,10 @@
 
                                 <tr>
                                     
+                                    
+                                    <td class="text-center">Empresa</td>
                                     <td class="text-center">{{$contrato->nombre.' '.$contrato->paterno.' '.$contrato->materno}}</td>
                                     <td class="text-center">{{$contrato->cargo}}</td>
-                                    <td class="text-center">{{$contrato->contrato}}</td>
                                     <td class="d-flex justify-content-around">
 
                                         @can('editar-firmante')

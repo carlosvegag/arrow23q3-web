@@ -2,7 +2,18 @@
 @section('estilos')
     <!-- JQuery DataTable Css -->
     <link href="{{asset('plugins/jquery-datatable/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+    <style>
 
+.slider-container {
+  scroll-snap-type: x mandatory;
+}
+
+.slider-container img {
+  scroll-snap-align: center;
+}
+
+
+      </style>
 @endsection
 @section('contenido')
 
@@ -32,20 +43,46 @@
                     <h2 class="text-center">Datos del avance</h2>
                     <br>
                     <a href="{{route('Avance.show',$avance->id_concepto)}}" class="btn btn-raised btn-success m-auto" ><i class="material-icons">arrow_back</i></a>
-                    <a class="btn btn-sm btn-raised btn-primary" href="{{ route('avence.createPDF',$avance->id) }}">Imprimir Reporte<i class="material-icons" style=" margin-bottom: 8px;">file_download</i> </a>
-                   
+                    <a class="btn btn-sm btn-raised btn-primary" href="{{ route('avence.createPDF',$avance->id,$request) }}">Imprimir Reporte<i class="material-icons" style=" margin-bottom: 8px;">file_download</i> </a>
+                    
                     {{-- en el caso de que este amrcado la longitud --}}
                     @if ($l==1)
                     <a href="{{route('registrar.avance',$avance->id)}}"  class="m-auto btn btn-raised btn-warning m-auto">Hombro Derecho</a>   
-                    <a href="{{route('registrar.avanceI',$avance->id)}}"  class="m-auto btn btn-raised btn-warning m-auto">Hombro Izquierdo</a>   
+                    <a href="{{route('registrar.avanceI',$avance->id)}}"  class="m-auto btn btn-raised btn-warning m-auto">Hombro Izquierdo</a>  
                     
                         
                     @else
                     <a href="{{route('registrar.avance',$avance->id)}}"  class="m-auto btn btn-raised btn-warning m-auto">Registrar avance</a><br><br>
                     @endif
 
+                    <div class="row">
+                  <form action="{{ route('ver.avanceFecha', $avance->id) }}" method="POST" file=true enctype="multipart/form-data">
+                    @csrf
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="dateInicio">Ingresa Fecha incio </label>
+                          <input type="date" id="myDate" name="bday">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="dateFin">Ingresa Fecha fin</label>
+                          <input type="date" id="dateFin" name="dateFin">  
+                        </div>
+                      </div>
+                      <div class="col-md-4 d-flex justify-content-center align-items-end">
+                      <button class="btn btn-sm btn-raised btn-primary" style="float:right;" type="submit">Imprimir Reporte<i class="material-icons" style=" margin-bottom: 8px;">file_download</i> </button>
+                      </div>
+                  </form>
+                </div>
+
                    
                 </div>
+
+
+              
+
+
                 
                 <div class="body">
                     
@@ -92,7 +129,7 @@
                                         @if ($an==1)
                                         <th  class="text-center">Ancho 1</th>
                                         <th class="text-center">Ancho 2</th>
-                                        <th  class="text-center" style="background-color: rgb(190, 191, 192)">Ancho Promedio </th>
+                                        <th  class="text-center" style="backg round-color: rgb(190, 191, 192)">Ancho Promedio </th>
                                         @endif
 
                                         {{-- El total cuando solo se tiene el ancho promedio --}}
@@ -170,7 +207,14 @@
                                          @endif
 
 
+                                        <th  class="text-center" style="background-color: rgb(190, 191, 192)">Img</th>
+
+                                        
                                         <th class="text-center ">OPC</th>
+
+                                        
+                                        
+                                        
                                       
                                     </tr></thead>
                                     <tbody>
@@ -179,8 +223,12 @@
                                         
                                         {{-- Cuerpo de la tabla --}}
                                         @foreach ($datosG as $key=> $dato)
+
+
+                                        
                                           
                                       <td class="text-center bg-info">{{$key}}</td>
+                                      
 
                            
                                         @if ($l==1)
@@ -313,21 +361,66 @@
                                             <th class="text-center"><?php  echo number_format($total, 2, '.', ','); ?></th>
                                             <?php $est+=$total ?>
                                           @endif
+
+
+
+                                    <th class="text-center">
+
+                                      <div class="slider-container"> 
+                                            
+                                        
+
+
+                                      <img src= "{{asset('img/avance/'.$dato->newimg)}}"class="img-fluid mb-3 img-thumbnail"  width="100px">
+                                              
+                                          <a data-path="{{route('reporte.imprimirpdf',$dato->id)}}" 
+                                           data-id="{{$dato->id}}"
+                                           class="btn btn-link  load-ajax-modal" 
+                                           role="button" 
+                                           data-toggle="modal" data-target="#dynamic-modal">
+                                           ver mas...
+                                        </a>
+                                        </div>
+                                    </th>
   
                                     
   
                          
 
                                        <th class="text-center  d-flex justify-content-around">
-
-                                        <a href="{{route('Avance.edit',$dato->id)}}" class="edit"><i class="zmdi zmdi-edit text-warning"></i></a>
+                                        <a href="{{route('Avance.edit',$dato->id)}}" class="edit"><i class="zmdi zmdi-edit"></i></a>
+                                        <a href="{{route('hombrod.showd',$dato->id)}}" class="edit"><i class="zmdi zmdi-eye" ></i></a> 
                                         <form action="{{route('Avance.destroy',$dato->id)}}"   method="post">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" style="cursor: pointer; background: transparent; border:0px;"><i class="material-icons text-danger">delete</i></button>
-                                          </form>
+                                        </form>
+                                        
+                                        
                                        </th>
-                                      
+                                       <th class="text-center  d-flex justify-content-around">
+                                       
+                                        
+                                        
+                                        
+                                        <!--<a type="button" class="btn btn-raised btn-default waves-effect" data-toggle="modal" data-target="#exampleModal">ver imagenes</a>
+<a class="btn btn-sm btn-raised btn-primary" href="{{ route('reporte.imprimirpdf',$dato->id) }}"><i class="zmdi zmdi-print" ></i> </a>
+                                        
+                                        
+                                        <a data-path="{{route('hombrod.showd',$dato->id)}}" 
+                                           data-id="{{$dato->id}}"
+                                           class="btn btn-raised btn-default waves-effect load-ajax-modal" 
+                                           role="button" 
+                                           data-toggle="modal" data-target="#dynamic-modal">
+                                           ver fotos
+                                        </a>-->
+                                        
+
+                                        
+                                       </th>
+
+
+
 
                                 </tr>
                                 @endforeach
@@ -477,16 +570,39 @@
                                          <th class="text-center"><?php  echo number_format($total, 2, '.', ','); ?></th>
                                          <?php $est+=$total ?>
                                          @endif
+
+                                         <th class="text-center">
+
+                                      <div class="slider-container"> 
+                                            
+                                        
+                                      <img src= "{{asset('img/avance/'.$dato->newimg)}}"class="img-fluid mb-3 img-thumbnail"  width="100px">
+                                        <a data-path="{{route('reporte.imprimirpdf',$dato->id)}}" 
+                                             data-id="{{$dato->id}}"
+                                             class="btn btn-link btn-default waves-effect load-ajax-modal" 
+                                             role="button" 
+                                             data-toggle="modal" data-target="#dynamic-modal">
+                                             ver mas...
+                                          </a>
+                                    </th>
                                  
                                     <th class="text-center  d-flex justify-content-around">
 
-                                     <a href="{{route('editar.izquierdo',$dato->id)}}" class="edit"><i class="zmdi zmdi-edit text-warning"></i></a>
+                                     <a href="{{route('editar.izquierdo',$dato->id)}}" class="edit"><i class="zmdi zmdi-edit"></i></a>
+                                        <a href="{{route('hombroI.showi',$dato->id)}}" class="edit"><i class="zmdi zmdi-eye" ></i></a>
+                                        
                                      <form action="{{route('Avance.destroy',$dato->id)}}"   method="post">
                                          @csrf
                                          @method('DELETE')
                                          <button type="submit" style="cursor: pointer; background: transparent; border:0px;"><i class="material-icons text-danger">delete</i></button>
                                        </form>
+                                       
                                     </th>
+                                    <th class="text-center  d-flex justify-content-around">
+
+                                    </th>
+                                    
+                                    
                                    
                                    
                                     {{-- inicio --}}
@@ -794,6 +910,7 @@
 
                                    
                                 </table>
+                                
                             </div>
                         </div>
                     </div>  
@@ -817,6 +934,44 @@
 
 </div>
 
+@endsection
 
+@section('scripts')
+
+<script>
+function myFunction() {
+  var x = document.getElementById("dateInicio").max;
+  document.getElementById("demo").innerHTML = x;
+}
+</script>
+
+<script>
+function myFunction() {
+  var x = document.getElementById("myDate").max;
+  document.getElementById("demo").innerHTML = x;
+}
+</script>
+    
+
+    <script>
+
+    $('.load-ajax-modal').click(function(){
+
+$.ajax({
+    type : 'GET',
+    url : $(this).data('path'),
+    success: function(result) {
+        $('#dynamic-modal div.modal-body').html(result);
+        $('#dynamic-modal div.modal-body #leftsidebar').hide();
+        $('#dynamic-modal div.modal-body .navbar').hide();
+        $('#dynamic-modal div.modal-body .color-bg').hide();
+        $('#dynamic-modal div.modal-body .content').css("margin", "unset");
+        $('#dynamic-modal div.modal-body #boton').data( "modal",1);
+        $('#dynamic-modal div.modal-body #boton').data( "id",$(this).data('id'));
+    }
+});
+});
+
+    </script>
 @endsection
 

@@ -141,7 +141,7 @@
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <div class="form-line">
-                                        <strong> Nobre </strong>
+                                        <strong> Nombre </strong>
                                             <input type="text" class="form-control"  id="name" name="name" value="{{old('name')}}"required>
                                         </div>
                                     </div>
@@ -224,7 +224,7 @@
                                 
                                 <div class="col-sm-12">
                                     <center>
-                                    <button type="submit" class="btn btn-raised waves-effect g-bg-blush2" style="display:inline-block" id="boton">Guardar</button>
+                                    <button type="submit" class="btn btn-raised waves-effect g-bg-blush2" style="display:inline-block" id="boton" data-modal="" data-id="">Guardar</button>
                                     <a href="{{ route('operativos.index')}}" class="btn btn-raised btn-default waves-effect">Cancelar</a>
                                     </center>
                                 </div>

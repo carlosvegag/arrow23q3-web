@@ -222,7 +222,7 @@
 .theme-blush .wizard .steps .current a,
 .theme-blush .profile-page .profile-sub-header .box-list ul li a:hover,
 .theme-blush .fc .fc-toolbar,
-.theme-blush .blog-page .single-blog-post .img-holder .date-box { background:linear-gradient(45deg, #dd5e89, #f7bb97); }
+.theme-blush .blog-page .single-blog-post .img-holder .date-box { background:linear-gradient(200deg, #000, #ff710a) }
 .theme-blush .navbar-brand { color: #fff; }
 .theme-blush .navbar-brand:hover { color: #fff; }
 .theme-blush .navbar-brand:active { color: #fff; }
@@ -235,8 +235,8 @@
 .theme-blush .nav .open > a:focus { background-color: transparent; }
 .theme-blush .bars { color: #fff; }
 .theme-blush .sidebar .menu .list li.active { background-color: transparent; }
-.theme-blush .sidebar .menu .list li.active >:first-child i, .theme-blush .sidebar .menu .list li.active >:first-child span, .theme-blush .morphsearch .dummy-column h2 { color: #f7bb97; }
+.theme-blush .sidebar .menu .list li.active >:first-child i, .theme-blush .sidebar .menu .list li.active >:first-child span, .theme-blush .morphsearch .dummy-column h2 { color: #ff710a; }
 .theme-blush .sidebar .menu .list .toggled { background-color: transparent; }
 .theme-blush .sidebar .menu .list .ml-menu { background-color: transparent; }
-.theme-blush .sidebar .legal .copyright a { color: #f7bb97 !important; }
-.theme-blush .nav-tabs .nav-link.active { border-bottom: 2px solid #f7bb97 !important; }
+.theme-blush .sidebar .legal .copyright a { color: #ff710a !important; }
+.theme-blush .nav-tabs .nav-link.active { border-bottom: 2px solid #ff710a !important; }

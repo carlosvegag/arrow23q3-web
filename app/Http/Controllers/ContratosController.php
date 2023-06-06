@@ -188,7 +188,7 @@ class ContratosController extends Controller
             
 
         ]
-    );
+        );
 
         $data=$request->only([
             'contrato',
@@ -356,7 +356,8 @@ class ContratosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Contrato $contrato)
+    
+     public function update(Request $request, Contrato $contrato)
     {
 
       
@@ -399,7 +400,7 @@ class ContratosController extends Controller
             
 
         ]
-    );
+        );
 
 
         
@@ -429,7 +430,9 @@ class ContratosController extends Controller
         $contrato->id_asistente=$request->id_asistente;
 
         $contrato->save();
+        //-------------------------------------------------------------------------------------------------------------
         return redirect()->route('contratos.index');
+        
 
 
     }
@@ -467,7 +470,7 @@ class ContratosController extends Controller
         Contrato::where('id','=',$id)->update(['estatus'=>0]);
         // return $contratos;
         // return view ('contratos.index');
-        return redirect('contratos');
+        return redirect('home');
 
 
     }

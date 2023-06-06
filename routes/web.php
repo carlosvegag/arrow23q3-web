@@ -21,6 +21,7 @@ use App\Http\Controllers\ContratosController;
 use App\Http\Controllers\ContratosResponsableController;
 use App\Http\Controllers\FianzaController;
 use App\Http\Controllers\ImagenContratoController;
+use App\Http\Controllers\ReporteController;
 
 use App\Models\Avance;
 
@@ -28,6 +29,8 @@ use App\Http\Controllers\AsignarCargoController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\FirmanteController;
+//pdf
+
 
 /*
 |--------------------------------------------------------------------------
@@ -88,6 +91,11 @@ Route::group(['middleware' => ['auth']], function (){
 
     Route::resource('contratosR',ContratosResponsableController::class);
 
+    Route::get('reporte/{id}/img',[ReporteController::class, 'imprimirpdf'])->name('reporte.imprimirpdf');
+    Route::get('reporte/{id}/img2',[ReporteController::class, 'updateimg2'])->name('reporte.updateimg2');
+    //Route::get('/avance/{id}/pdf',[AvanceController::class,'createPDF'])->name('avence.createPDF');
+    //Route::get('verhombrod/{id}/ver',[AvanceController::class,'showd'])->name('hombrod.showd');
+
     Route::resource('codigos',CodigoController::class);
 
     Route::get('conceptos/{id}/',[CodigoController::class,'principal'])->name('codigo.principal');
@@ -123,7 +131,10 @@ Route::group(['middleware' => ['auth']], function (){
     Route::get('agregarf/{id}/opciones',[AvanceController::class,'agregaropc'])->name('registrar.datos');
     Route::post('agregarop/{id}/guardar',[AvanceController::class,'guardaropc'])->name('guardar.opc');
     Route::get('avancet/{id}/ver',[AvanceController::class,'veravance'])->name('ver.avance');
-    
+    Route::post('avancet/{id}/ver',[AvanceController::class,'veravance'])->name('ver.avanceFecha');
+
+    Route::get('avancet/{id}/ver/fecha',[AvanceController::class,'buscarfecha'])->name('ver.buscarfecha');
+
     Route::get('formulario/{id}/ver',[AvanceController::class,'formulario'])->name('registrar.avance');
     Route::get('formularioI/{id}/ver',[AvanceController::class,'formularioIzquierdo'])->name('registrar.avanceI');
 
@@ -132,8 +143,10 @@ Route::group(['middleware' => ['auth']], function (){
 
     Route::get('editarHombro/{id}/concepto',[AvanceController::class,'editarIz'])->name('editar.izquierdo');
 
+    Route::get('verhombrod/{id}/ver',[AvanceController::class,'showd'])->name('hombrod.showd');
+    Route::get('verhombroI/{id}/verI',[AvanceController::class,'showi'])->name('hombroI.showi');
 
-    Route::get('/avance/{id}/pdf',[AvanceController::class,'createPDF'])->name('avence.createPDF');
+    Route::get('/avance/{id}/pdf/request',[AvanceController::class,'createPDF'])->name('avence.createPDF');
     Route::get('/concepto/{id}/pdf',[AvanceController::class,'create2PDF'])->name('concepto.createPDF');
 
     Route::get('avances/{id}/imagen',[AvanceController::class,'agregarimagenubi'])->name('avances.agregarimagenubi');
@@ -164,7 +177,9 @@ Route::group(['middleware' => ['auth']], function (){
     Route::get('financiero/{id}/pdf',[ContratosController::class,'createPDF'])->name('finaciero.createPDF'); 
 	
     Route::get('/avancespdf/{id}/pdf',[AvanceController::class,'createPDFAvance'])->name('avancespdf.createPDFAvance');
+
     
+
 } );
 
 

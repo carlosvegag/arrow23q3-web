@@ -20,8 +20,9 @@
 <link href="{{asset('css/login.css')}}" rel="stylesheet">
 
 <link rel="stylesheet" href="{{asset('css/themes/all-themes.css')}}"/>
+<link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
-<body class="login-page authentication">
+<body class="login-page authentication" style="overflow-y: hidden;">
 
 @yield('contenido')
 

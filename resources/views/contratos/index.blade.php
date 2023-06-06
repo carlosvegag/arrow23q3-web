@@ -56,12 +56,14 @@
                         @endif
                         @endforeach
                          --}}
-
+                         <!--Aqui se coloca boton de firmantes que se quito del menu     A V A N C E -->
+                         <a href="/firmantes" class="btn  btn-raised btn-success waves-effect" role="button"> Firmantes</a>
                     </div>
                 </div>
             </div>
 
             @endforeach
+            
 
         </div>
 
