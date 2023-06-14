@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 25-04-2023 a las 06:37:31
--- Versión del servidor: 10.4.27-MariaDB
--- Versión de PHP: 8.0.25
+-- Servidor: 127.0.0.1:3306
+-- Tiempo de generación: 27-01-2023 a las 17:12:20
+-- Versión del servidor: 10.5.16-MariaDB-cll-lve
+-- Versión de PHP: 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `estadia_arrow`
+-- Base de datos: `u205223607_arrow`
 --
 
 -- --------------------------------------------------------
@@ -29,11 +29,11 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `afianzadoras` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `nombre` varchar(191) NOT NULL,
-  `rfc` varchar(191) NOT NULL,
-  `razon_social` varchar(191) NOT NULL,
-  `domicilio` varchar(191) NOT NULL,
-  `telefono` varchar(191) NOT NULL,
+  `nombre` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rfc` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `razon_social` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `domicilio` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telefono` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `id_empresa` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -90,8 +90,8 @@ INSERT INTO `avances` (`id`, `inicio`, `fin`, `id_concepto`, `localizacion`, `al
 
 CREATE TABLE `cargos` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `nombre_cargo` varchar(191) NOT NULL,
-  `descripcion` varchar(191) NOT NULL,
+  `nombre_cargo` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descripcion` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `id_empresa` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -115,9 +115,9 @@ INSERT INTO `cargos` (`id`, `nombre_cargo`, `descripcion`, `id_empresa`, `create
 
 CREATE TABLE `clientes` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `nombre` varchar(191) NOT NULL,
-  `telefono` varchar(191) NOT NULL,
-  `email` varchar(191) NOT NULL,
+  `nombre` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telefono` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `id_tenant` bigint(20) UNSIGNED DEFAULT NULL,
   `id_empresa` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -139,12 +139,12 @@ INSERT INTO `clientes` (`id`, `nombre`, `telefono`, `email`, `id_tenant`, `id_em
 
 CREATE TABLE `conceptos` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `codigo` varchar(191) NOT NULL,
-  `concepto` text DEFAULT NULL,
+  `codigo` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `concepto` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `id_unidad` bigint(20) UNSIGNED DEFAULT NULL,
   `cantidad` double(12,3) DEFAULT NULL,
   `punitario` double(12,3) DEFAULT NULL,
-  `precio_letra` varchar(191) DEFAULT NULL,
+  `precio_letra` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `importe` double(10,2) DEFAULT NULL,
   `porcentaje` double(6,2) DEFAULT NULL,
   `estatus` int(11) NOT NULL DEFAULT 0,
@@ -180,11 +180,11 @@ INSERT INTO `conceptos` (`id`, `codigo`, `concepto`, `id_unidad`, `cantidad`, `p
 
 CREATE TABLE `contratos` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `contrato` varchar(191) NOT NULL,
-  `nombre_obra` varchar(191) NOT NULL,
-  `descripcion` varchar(191) NOT NULL,
+  `contrato` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre_obra` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descripcion` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `fecha_alta` date NOT NULL,
-  `ubicacion` varchar(191) NOT NULL,
+  `ubicacion` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `fecha_inicio` date NOT NULL,
   `fecha_termino` date NOT NULL,
   `plazo_dias` int(11) NOT NULL,
@@ -225,45 +225,40 @@ CREATE TABLE `datos` (
   `altura` double(12,2) DEFAULT NULL,
   `pieza` int(11) DEFAULT NULL,
   `espesor` double(12,2) DEFAULT NULL,
+  `photo` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `id_concepto` bigint(20) UNSIGNED DEFAULT NULL,
   `id_avance` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `newimg` varchar(191) DEFAULT NULL,
-  `concepto` varchar(200) DEFAULT NULL,
-  `newimg2` varchar(191) DEFAULT NULL,
-  `newimg3` varchar(191) DEFAULT NULL,
-  `newimg4` varchar(191) DEFAULT NULL,
-  `newimg5` varchar(191) DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `datos`
 --
 
-INSERT INTO `datos` (`id`, `hombro_derecho1`, `hombro_derecho2`, `hombro_izquierdo1`, `hombro_izquierdo2`, `ancho1`, `ancho2`, `anchot`, `altura`, `pieza`, `espesor`, `id_concepto`, `id_avance`, `created_at`, `updated_at`, `newimg`, `concepto`, `newimg2`, `newimg3`, `newimg4`, `newimg5`) VALUES
-(2, 10.00, 20.00, NULL, NULL, NULL, NULL, 50.00, NULL, NULL, NULL, 6, 3, '2022-01-11 22:32:36', '2022-01-11 22:32:54', '168054465915980.jpg', NULL, '168054465915980.jpg', '168004280455047.jpg', '168004280455047.jpg', '167944160362222.jpg'),
-(3, NULL, NULL, 40.00, 60.00, NULL, NULL, 50.00, NULL, NULL, NULL, 6, 3, '2022-01-11 22:33:20', '2022-01-11 22:33:20', '168054465915980.jpg', NULL, '168022959226372.jpg', '168004280455047.jpg', '168022959226372.jpg', '168004280455047.jpg'),
-(9, 40.00, 60.00, NULL, NULL, NULL, NULL, 1.00, NULL, NULL, NULL, 3, 1, '2022-08-29 05:34:48', '2022-08-29 05:34:48', '168054465915980.jpg', NULL, '168022959226372.jpg', '168004280455047.jpg', '168022959226372.jpg', '168054465915980.jpg'),
-(10, 60.00, 80.00, NULL, NULL, NULL, NULL, 1.00, NULL, NULL, NULL, 3, 1, '2022-08-29 05:39:17', '2022-08-29 05:39:17', '168054465915980.jpg', NULL, '168022959226372.jpg', '168004280455047.jpg', '168004280455047.jpg', '168022959226372.jpg'),
-(11, 80.00, 100.00, NULL, NULL, NULL, NULL, 1.00, NULL, NULL, NULL, 3, 1, '2022-08-29 05:39:28', '2022-08-29 05:39:28', '168054465915980.jpg', NULL, '168022959226372.jpg', '168004280455047.jpg', '167944160362222.jpg', '168004280455047.jpg'),
-(12, 100.00, 120.00, NULL, NULL, NULL, NULL, 1.00, NULL, NULL, NULL, 3, 1, '2022-08-29 05:39:37', '2022-08-29 05:39:37', '168054465915980.jpg', NULL, '168022959226372.jpg', '168004280455047.jpg', '167771283891679.jpg', '168004280455047.jpg'),
-(13, NULL, NULL, 0.00, 20.00, NULL, NULL, 1.00, NULL, NULL, NULL, 3, 1, '2022-08-29 05:40:54', '2022-08-29 05:40:54', '168054465915980.jpg', NULL, '168022959226372.jpg', '168004280455047.jpg', '167944160362222.jpg', '167771283891679.jpg'),
-(14, NULL, NULL, 123.00, 456.00, NULL, NULL, 678.00, NULL, NULL, NULL, 3, 1, NULL, '2023-04-05 04:19:58', '168054465915980.jpg', 'dfdf', '168022959226372.jpg', '168004280455047.jpg', '168022959226372.jpg', '168004280455047.jpg'),
-(15, NULL, NULL, 40.00, 60.00, NULL, NULL, 1.00, NULL, NULL, NULL, 3, 1, '2022-08-29 05:43:45', '2022-08-29 05:43:45', '168054465915980.jpg', NULL, '168022959226372.jpg', '168004280455047.jpg', '168004280455047.jpg', '168022959226372.jpg'),
-(16, NULL, NULL, 60.00, 80.00, NULL, NULL, 1.00, NULL, NULL, NULL, 3, 1, '2022-08-29 05:43:55', '2022-08-29 05:43:55', '168054465915980.jpg', NULL, '168022959226372.jpg', '168004280455047.jpg', '167944160362222.jpg', '168022959226372.jpg'),
-(17, NULL, NULL, 80.00, 100.00, NULL, NULL, 1.00, NULL, NULL, NULL, 3, 1, '2022-08-29 05:44:06', '2022-08-29 05:44:06', '168054465915980.jpg', NULL, '168022959226372.jpg', '168004280455047.jpg', '167771283891679.jpg', '167944160362222.jpg'),
-(18, NULL, NULL, 100.00, 120.00, NULL, NULL, 1.00, NULL, NULL, NULL, 3, 1, '2022-08-29 05:44:27', '2022-08-29 05:44:27', '168054465915980.jpg', NULL, '168022959226372.jpg', '168004280455047.jpg', '168004280455047.jpg', '167771283891679.jpg'),
-(19, NULL, NULL, 120.00, 140.00, NULL, NULL, 1.00, NULL, NULL, NULL, 3, 1, '2022-08-29 05:44:37', '2022-08-29 05:44:37', '168054465915980.jpg', NULL, '168022959226372.jpg', '168004280455047.jpg', '167944160362222.jpg', '168022959226372.jpg'),
-(20, NULL, NULL, 140.00, 160.00, NULL, NULL, 1.00, NULL, NULL, NULL, 3, 1, '2022-08-29 05:44:46', '2022-08-29 05:44:46', '168054465915980.jpg', NULL, '168022959226372.jpg', '168004280455047.jpg', '167771283891679.jpg', '167944160362222.jpg'),
-(21, NULL, NULL, 160.00, 180.00, NULL, NULL, 1.00, NULL, NULL, NULL, 3, 1, '2022-08-29 05:44:59', '2022-08-29 05:44:59', '168054465915980.jpg', NULL, '168022959226372.jpg', '168004280455047.jpg', '168022959226372.jpg', '168004280455047.jpg'),
-(22, NULL, NULL, 180.00, 200.00, NULL, NULL, 1.00, NULL, NULL, NULL, 3, 1, '2022-08-29 05:45:18', '2022-08-29 05:45:18', '168054465915980.jpg', NULL, '168022959226372.jpg', '168004280455047.jpg', '167944160362222.jpg', '167771283891679.jpg'),
-(23, 120.00, 140.00, NULL, NULL, NULL, NULL, 1.00, NULL, NULL, NULL, 3, 1, '2022-08-29 05:45:41', '2022-08-29 05:45:41', '168054465915980.jpg', NULL, '168022959226372.jpg', '168004280455047.jpg', '168004280455047.jpg', '168004280455047.jpg'),
-(24, 140.00, 160.00, NULL, NULL, NULL, NULL, 1.00, NULL, NULL, NULL, 3, 1, '2022-08-29 05:45:51', '2022-08-29 05:45:51', '168054465915980.jpg', NULL, '168022959226372.jpg', '168004280455047.jpg', '168004280455047.jpg', '168004280455047.jpg'),
-(25, 160.00, 180.00, NULL, NULL, NULL, NULL, 1.00, NULL, NULL, NULL, 3, 1, '2022-08-29 05:46:03', '2022-08-29 05:46:03', '168054465915980.jpg', NULL, '168022959226372.jpg', '168004280455047.jpg', '168022959226372.jpg', '168004280455047.jpg'),
-(26, 180.00, 200.00, NULL, NULL, NULL, NULL, 1.00, NULL, NULL, NULL, 3, 1, '2022-08-29 05:46:09', '2022-08-29 05:46:09', '168054465915980.jpg', NULL, '168054465915980.jpg', '168004280455047.jpg', '167771283891679.jpg', '168004280455047.jpg'),
-(55, 11.00, 11.00, NULL, NULL, NULL, NULL, 11.00, NULL, NULL, NULL, 3, 1, '2023-03-02 05:20:17', '2023-03-13 00:42:18', '167771283891679.jpg', 'aa', '168022959226372.jpg', '168004280455047.jpg', '168004280455047.jpg', '168022959226372.jpg'),
-(147, NULL, NULL, 345.00, 655.00, NULL, NULL, 675.89, NULL, NULL, NULL, 3, 1, '2023-04-04 07:00:52', '2023-04-04 07:42:20', '168057254054975.jpg', 'afdfdsgsd', '168022959226372.jpg', '168057254062150.jpg', '168057254086420.jpg', '168057254081491.jpg');
+INSERT INTO `datos` (`id`, `hombro_derecho1`, `hombro_derecho2`, `hombro_izquierdo1`, `hombro_izquierdo2`, `ancho1`, `ancho2`, `anchot`, `altura`, `pieza`, `espesor`, `photo, `id_concepto`, `id_avance`, `created_at`, `updated_at`) VALUES
+(1, 4.70, 20.00, NULL, NULL, NULL, NULL, 1.00, NULL, NULL, NULL, NULL, 3, 1, '2021-12-13 03:30:43', '2022-08-29 05:29:48'),
+(2, 10.00, 20.00, NULL, NULL, NULL, NULL, 50.00, NULL, NULL, NULL, NULL, 6, 3, '2022-01-11 22:32:36', '2022-01-11 22:32:54'),
+(3, NULL, NULL, 40.00, 60.00, NULL, NULL, 50.00, NULL, NULL, NULL, NULL, 6, 3, '2022-01-11 22:33:20', '2022-01-11 22:33:20'),
+(8, 20.00, 40.00, NULL, NULL, NULL, NULL, 1.00, NULL, NULL, NULL, NULL, 3, 1, '2022-08-29 05:30:21', '2022-08-29 05:30:21'),
+(9, 40.00, 60.00, NULL, NULL, NULL, NULL, 1.00, NULL, NULL, NULL, NULL, 3, 1, '2022-08-29 05:34:48', '2022-08-29 05:34:48'),
+(10, 60.00, 80.00, NULL, NULL, NULL, NULL, 1.00, NULL, NULL, NULL, NULL, 3, 1, '2022-08-29 05:39:17', '2022-08-29 05:39:17'),
+(11, 80.00, 100.00, NULL, NULL, NULL, NULL, 1.00, NULL, NULL, NULL, NULL, 3, 1, '2022-08-29 05:39:28', '2022-08-29 05:39:28'),
+(12, 100.00, 120.00, NULL, NULL, NULL, NULL, 1.00, NULL, NULL, NULL, NULL, 3, 1, '2022-08-29 05:39:37', '2022-08-29 05:39:37'),
+(13, NULL, NULL, 0.00, 20.00, NULL, NULL, 1.00, NULL, NULL, NULL, NULL, 3, 1, '2022-08-29 05:40:54', '2022-08-29 05:40:54'),
+(14, NULL, NULL, 20.00, 40.00, NULL, NULL, 1.00, NULL, NULL, NULL, NULL, 3, 1, '2022-08-29 05:43:23', '2022-08-29 05:43:23'),
+(15, NULL, NULL, 40.00, 60.00, NULL, NULL, 1.00, NULL, NULL, NULL, NULL, 3, 1, '2022-08-29 05:43:45', '2022-08-29 05:43:45'),
+(16, NULL, NULL, 60.00, 80.00, NULL, NULL, 1.00, NULL, NULL, NULL, NULL, 3, 1, '2022-08-29 05:43:55', '2022-08-29 05:43:55'),
+(17, NULL, NULL, 80.00, 100.00, NULL, NULL, 1.00, NULL, NULL, NULL, NULL, 3, 1, '2022-08-29 05:44:06', '2022-08-29 05:44:06'),
+(18, NULL, NULL, 100.00, 120.00, NULL, NULL, 1.00, NULL, NULL, NULL, NULL, 3, 1, '2022-08-29 05:44:27', '2022-08-29 05:44:27'),
+(19, NULL, NULL, 120.00, 140.00, NULL, NULL, 1.00, NULL, NULL, NULL, NULL, 3, 1, '2022-08-29 05:44:37', '2022-08-29 05:44:37'),
+(20, NULL, NULL, 140.00, 160.00, NULL, NULL, 1.00, NULL, NULL, NULL, NULL, 3, 1, '2022-08-29 05:44:46', '2022-08-29 05:44:46'),
+(21, NULL, NULL, 160.00, 180.00, NULL, NULL, 1.00, NULL, NULL, NULL, NULL, 3, 1, '2022-08-29 05:44:59', '2022-08-29 05:44:59'),
+(22, NULL, NULL, 180.00, 200.00, NULL, NULL, 1.00, NULL, NULL, NULL, NULL, 3, 1, '2022-08-29 05:45:18', '2022-08-29 05:45:18'),
+(23, 120.00, 140.00, NULL, NULL, NULL, NULL, 1.00, NULL, NULL, NULL, NULL, 3, 1, '2022-08-29 05:45:41', '2022-08-29 05:45:41'),
+(24, 140.00, 160.00, NULL, NULL, NULL, NULL, 1.00, NULL, NULL, NULL, NULL, 3, 1, '2022-08-29 05:45:51', '2022-08-29 05:45:51'),
+(25, 160.00, 180.00, NULL, NULL, NULL, NULL, 1.00, NULL, NULL, NULL, NULL, 3, 1, '2022-08-29 05:46:03', '2022-08-29 05:46:03'),
+(26, 180.00, 200.00, NULL, NULL, NULL, NULL, 1.00, NULL, NULL, NULL, NULL, 3, 1, '2022-08-29 05:46:09', '2022-08-29 05:46:09');
 
 -- --------------------------------------------------------
 
@@ -273,12 +268,12 @@ INSERT INTO `datos` (`id`, `hombro_derecho1`, `hombro_derecho2`, `hombro_izquier
 
 CREATE TABLE `empleados` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `nombre` varchar(191) NOT NULL,
-  `apellido_paterno` varchar(191) NOT NULL,
-  `apellido_materno` varchar(191) NOT NULL,
-  `tipo_empleado` varchar(2) NOT NULL,
-  `num_casa` varchar(191) DEFAULT NULL,
-  `num_cel` varchar(191) DEFAULT NULL,
+  `nombre` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `apellido_paterno` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `apellido_materno` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tipo_empleado` varchar(2) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `num_casa` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `num_cel` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `estatus` int(11) NOT NULL DEFAULT 0,
   `id_empresa` bigint(20) UNSIGNED DEFAULT NULL,
   `id_cliente` bigint(20) UNSIGNED DEFAULT NULL,
@@ -326,11 +321,11 @@ INSERT INTO `empleado_cargos` (`id`, `id_cargo`, `id_empleado`, `created_at`, `u
 
 CREATE TABLE `empresas` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `nombre` varchar(191) NOT NULL,
-  `ubicacion` varchar(191) NOT NULL,
-  `rfc` varchar(191) NOT NULL,
-  `imms` varchar(191) NOT NULL,
-  `ccem` varchar(191) NOT NULL,
+  `nombre` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ubicacion` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rfc` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `imms` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ccem` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `id_tenant` bigint(20) UNSIGNED DEFAULT NULL
@@ -354,11 +349,11 @@ INSERT INTO `empresas` (`id`, `nombre`, `ubicacion`, `rfc`, `imms`, `ccem`, `cre
 
 CREATE TABLE `failed_jobs` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `uuid` varchar(191) NOT NULL,
-  `connection` text NOT NULL,
-  `queue` text NOT NULL,
-  `payload` longtext NOT NULL,
-  `exception` longtext NOT NULL,
+  `uuid` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -417,8 +412,8 @@ INSERT INTO `firmantes` (`id`, `id_empleado_cargo`, `id_contrato`, `created_at`,
 
 CREATE TABLE `imagenes_contratos` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `imagen` varchar(191) DEFAULT NULL,
-  `descripcion` varchar(191) NOT NULL,
+  `imagen` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `descripcion` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `id_contrato` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -442,18 +437,18 @@ INSERT INTO `imagenes_contratos` (`id`, `imagen`, `descripcion`, `id_contrato`, 
 CREATE TABLE `img_avances` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `id_avance` bigint(20) UNSIGNED DEFAULT NULL,
-  `ip` varchar(191) DEFAULT NULL,
-  `country` varchar(191) DEFAULT NULL,
-  `countrycode` varchar(191) DEFAULT NULL,
-  `regioncode` varchar(191) DEFAULT NULL,
-  `regionname` varchar(191) DEFAULT NULL,
-  `cityname` varchar(191) DEFAULT NULL,
-  `zipcode` varchar(191) DEFAULT NULL,
-  `postalcode` varchar(191) DEFAULT NULL,
-  `latitude` varchar(191) DEFAULT NULL,
-  `longitude` varchar(191) DEFAULT NULL,
-  `imagen` varchar(191) DEFAULT NULL,
-  `descripcion` varchar(191) DEFAULT NULL,
+  `ip` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `country` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `countrycode` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `regioncode` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `regionname` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cityname` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `zipcode` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `postalcode` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `latitude` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `longitude` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `imagen` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `descripcion` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -482,8 +477,8 @@ INSERT INTO `img_avances` (`id`, `id_avance`, `ip`, `country`, `countrycode`, `r
 
 CREATE TABLE `img_conceptos` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `imagen` varchar(191) DEFAULT NULL,
-  `descripcion` varchar(191) DEFAULT NULL,
+  `imagen` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `descripcion` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `id_concepto` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -508,7 +503,7 @@ INSERT INTO `img_conceptos` (`id`, `imagen`, `descripcion`, `id_concepto`, `crea
 
 CREATE TABLE `migrations` (
   `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(191) NOT NULL,
+  `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -550,7 +545,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 
 CREATE TABLE `model_has_permissions` (
   `permission_id` bigint(20) UNSIGNED NOT NULL,
-  `model_type` varchar(191) NOT NULL,
+  `model_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `model_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -562,7 +557,7 @@ CREATE TABLE `model_has_permissions` (
 
 CREATE TABLE `model_has_roles` (
   `role_id` bigint(20) UNSIGNED NOT NULL,
-  `model_type` varchar(191) NOT NULL,
+  `model_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `model_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -591,7 +586,6 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 (1, 'App\\Models\\User', 24),
 (1, 'App\\Models\\User', 25),
 (1, 'App\\Models\\User', 33),
-(1, 'App\\Models\\User', 34),
 (2, 'App\\Models\\User', 26),
 (3, 'App\\Models\\User', 3),
 (3, 'App\\Models\\User', 27),
@@ -605,8 +599,8 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 --
 
 CREATE TABLE `password_resets` (
-  `email` varchar(191) NOT NULL,
-  `token` varchar(191) NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -618,8 +612,8 @@ CREATE TABLE `password_resets` (
 
 CREATE TABLE `permissions` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(191) NOT NULL,
-  `guard_name` varchar(191) NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guard_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -686,11 +680,11 @@ INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at
 
 CREATE TABLE `personal_access_tokens` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `tokenable_type` varchar(191) NOT NULL,
+  `tokenable_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tokenable_id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(191) NOT NULL,
-  `token` varchar(64) NOT NULL,
-  `abilities` text DEFAULT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -704,9 +698,9 @@ CREATE TABLE `personal_access_tokens` (
 
 CREATE TABLE `roles` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(191) NOT NULL,
-  `id_tenant` varchar(191) DEFAULT NULL,
-  `guard_name` varchar(191) NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_tenant` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `guard_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -855,8 +849,8 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 
 CREATE TABLE `unidad` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `nombre` varchar(191) NOT NULL,
-  `descripcion` varchar(191) NOT NULL,
+  `nombre` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descripcion` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `estatus` int(11) NOT NULL DEFAULT 0,
   `id_empresa` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -884,18 +878,18 @@ INSERT INTO `unidad` (`id`, `nombre`, `descripcion`, `estatus`, `id_empresa`, `c
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(191) NOT NULL,
-  `email` varchar(191) NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(191) NOT NULL,
-  `photo` varchar(191) DEFAULT NULL,
+  `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `photo` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `id_tenant` bigint(20) UNSIGNED DEFAULT NULL,
-  `empresa` varchar(191) DEFAULT NULL,
-  `remember_token` varchar(100) DEFAULT NULL,
+  `empresa` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `confirmed` tinyint(1) NOT NULL DEFAULT 0,
-  `confirmation_code` varchar(191) DEFAULT NULL,
+  `confirmation_code` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `estatus` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -915,9 +909,8 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `ph
 (25, 'Jose', 'ricdelrosario88@gmail.com', NULL, '$2y$10$MnFGIm1BtL.XZIx5FfdFO.9LMnioFi4wwbHlfkh1SJ5HzJEMdFzL2', 'tenant.png', NULL, NULL, NULL, '2022-06-04 16:18:57', '2022-06-04 17:56:08', 1, NULL, 0),
 (26, 'Ulises Efrain Sanchez Martinez', 'ulises@gmail.com', NULL, '$2y$10$8EdCAcGC2KwzWFiO21/GkOMfLf5mlOoNYrEV86yJPbnc.aSM2537a', '165947799363715.jpg', 1, '1', NULL, '2022-07-20 04:09:34', '2022-08-30 02:33:02', 1, NULL, 0),
 (27, 'Adrián Molina Medina', 'adrian@gmail.com', NULL, '$2y$10$bzdRUzn/nE062k5jzrTh3Oz0O9iauNWHlIP5GE5KIOr4BLHCExZGm', '166172000750252.jpg', 1, '1', NULL, '2022-07-26 09:36:42', '2022-08-29 01:53:27', 1, NULL, 0),
-(32, 'Jaime Israel Sanchez Martinez', 'jaimesm@gmail.com', NULL, '$2y$10$FEoHLpMuU0a4vbH8LD.MJu3miF3FnuFDLqko6D9YYTpQFF.umahNi', '166171927445879.png', 1, '1', NULL, '2022-08-29 01:41:15', '2023-03-30 04:27:22', 1, NULL, 0),
-(33, 'Ana Gabriela Corona Denova', 'agcd040396@hotmail.com', NULL, '$2y$10$NaABVeTacLK/UukN7yILhOT9hTGNR65pUKeQl2wlvzBR0AA26mA4e', 'tenant.png', NULL, NULL, NULL, '2022-12-31 03:24:03', '2022-12-31 03:24:03', 0, 'vbPP8TspEWHBYRb9yba4nSPZz', 0),
-(34, 'Bryan Axel', 'axelbry@gmail.com', NULL, '$2y$10$4P.9H8MZyZQF5CwaOHG3HegKbAUswbFZnuxN8H4D.cd7PFBtF3mVi', 'tenant.png', NULL, NULL, NULL, '2023-03-29 14:43:14', '2023-03-29 14:43:14', 0, 'gqAmMIRxSIK5B8GoZAnEtQGBt', 0);
+(32, 'Jaime Israel Sanchez Martinez', 'jaimesm@gmail.com', NULL, '$2y$10$FEoHLpMuU0a4vbH8LD.MJu3miF3FnuFDLqko6D9YYTpQFF.umahNi', '166171927445879.png', 1, '1', NULL, '2022-08-29 01:41:15', '2022-08-30 02:47:44', 1, NULL, 0),
+(33, 'Ana Gabriela Corona Denova', 'agcd040396@hotmail.com', NULL, '$2y$10$NaABVeTacLK/UukN7yILhOT9hTGNR65pUKeQl2wlvzBR0AA26mA4e', 'tenant.png', NULL, NULL, NULL, '2022-12-31 03:24:03', '2022-12-31 03:24:03', 0, 'vbPP8TspEWHBYRb9yba4nSPZz', 0);
 
 --
 -- Índices para tablas volcadas
@@ -1162,7 +1155,7 @@ ALTER TABLE `contratos`
 -- AUTO_INCREMENT de la tabla `datos`
 --
 ALTER TABLE `datos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=150;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT de la tabla `empleados`
@@ -1252,7 +1245,7 @@ ALTER TABLE `unidad`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- Restricciones para tablas volcadas
