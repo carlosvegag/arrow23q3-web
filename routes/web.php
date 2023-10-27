@@ -55,10 +55,19 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/register/verify/{code}', [App\Http\Controllers\Auth\RegisterController::class,'verify'])->name('verify');
 
+
+
+
 Route::group(['middleware' => ['auth']], function (){
 
     Route::resource('roles',RolController::class);
     Route::resource('usuarios',UsuarioController::class);
+//Rutas para las suscripciones
+    Route::get('/subscribe', 'SubscriptionController@showSubscriptionForm')->name('subscription.form');
+    Route::post('/subscribe', 'SubscriptionController@createSubscription')->name('subscription.create');
+    Route::get('/subscriptions', 'SubscriptionController@listSubscriptions')->name('subscription.list');
+
+
     Route::resource('empresas',EmpresaController::class);
     Route::resource('afianzadoras',AfianzadoraController::class);
     Route::resource('clientes',ClienteController::class);

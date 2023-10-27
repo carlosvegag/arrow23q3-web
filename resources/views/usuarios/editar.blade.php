@@ -194,7 +194,15 @@
                                             </div>
                                 </div>
 
-                                
+                                <!-- Botones de suscripción -->
+
+                                <div class="col-sm-12">
+                                <strong> Suscripción del Usuario para agregar nuevos reportes </strong>
+                                    <center>
+                                    <button type="submit" class="btn btn-raised waves-effect g-bg-blush2" id="boton">Suscripción de este usuario</button>
+                                    </center>
+                                </div>
+
 
                                 <div class="col-md-6 col-sm-12 ">
                                     <div class="form-group drop-custum">
