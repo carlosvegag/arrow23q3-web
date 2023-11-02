@@ -191,6 +191,9 @@ Route::group(['middleware' => ['auth']], function (){
 
 } );
 
+Route::post('/subscribe', 'SubscriptionController@subscribe');
+Route::get('/subscriptions', 'SubscriptionController@index');
+Route::post('/cancel-subscription', 'SubscriptionController@cancel');
 
 //Route::resource('tenant', TenantController::class);
 
