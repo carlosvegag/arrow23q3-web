@@ -73,7 +73,10 @@
                                             <!-- @can('administrar-suscripcion')
 
                                             @endcan -->
-                                            <button type="submit" style="cursor: pointer; background: #ffffff; border:0px;">Administrar Suscripción</button>
+                                            <form method="POST" action="{{ route('suscribirse') }}">
+                                                @csrf
+                                                <button type="submit" style="cursor: pointer; background: #ffffff; border:0px;">Administrar Suscripción</button>
+                                            </form>
                                         </td>
                                     
                                     </tr>

@@ -1,3 +1,5 @@
+<?php
+
 use PayPal\Rest\ApiContext;
 use PayPal\Auth\OAuthTokenCredential;
 

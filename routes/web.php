@@ -31,7 +31,8 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\FirmanteController;
 //pdf
 
-
+use App\Http\Controllers\SubscriptionController;
+//PayPal
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -66,6 +67,8 @@ Route::group(['middleware' => ['auth']], function (){
     Route::get('/subscribe', 'SubscriptionController@showSubscriptionForm')->name('subscription.form');
     Route::post('/subscribe', 'SubscriptionController@createSubscription')->name('subscription.create');
     Route::get('/subscriptions', 'SubscriptionController@listSubscriptions')->name('subscription.list');
+
+    
 
 
     Route::resource('empresas',EmpresaController::class);
@@ -198,3 +201,4 @@ Route::post('/cancel-subscription', 'SubscriptionController@cancel');
 //Route::resource('tenant', TenantController::class);
 
 // Contrasela de mailgun fHVp4w0CK03W*&qY
+
