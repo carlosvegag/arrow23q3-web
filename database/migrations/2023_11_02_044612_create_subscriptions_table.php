@@ -6,11 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateSubscriptionsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('subscriptions', function (Blueprint $table) {
@@ -27,12 +22,6 @@ class CreateSubscriptionsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
         });
     }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('subscriptions');

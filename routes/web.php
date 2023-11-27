@@ -33,6 +33,7 @@ use App\Http\Controllers\FirmanteController;
 
 use App\Http\Controllers\SubscriptionController;
 //PayPal
+use App\Http\Controllers\Payments\PayPalController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -63,12 +64,16 @@ Route::group(['middleware' => ['auth']], function (){
 
     Route::resource('roles',RolController::class);
     Route::resource('usuarios',UsuarioController::class);
-//Rutas para las suscripciones
-    Route::get('/subscribe', 'SubscriptionController@showSubscriptionForm')->name('subscription.form');
-    Route::post('/subscribe', 'SubscriptionController@createSubscription')->name('subscription.create');
-    Route::get('/subscriptions', 'SubscriptionController@listSubscriptions')->name('subscription.list');
-
+/*Rutas para las suscripciones*/
     
+    Route::post('/subscriptions/{usuario}', 'PagarUsuarioController@procesar')->name('procesar.usuario');
+    Route::post('/administrar-suscripcion/{sub_id}', 'AdministrarController@procesar')->name('administrar.suscripcion');
+    Route::post('/renovar-suscripcion/{sub_id}', 'RenovarController@procesar')->name('administrar.suscripcion');
+    Route::post('/procesar-pago/{usuarioid}', [PayPalController::class, 'createSubscription']);
+
+    //Route::post('/procesar-pago/{usuarioId}', [PaymentController::class, 'subscribe']);
+
+    //Route::post('/administrar-suscripcion/{usuario}')
 
 
     Route::resource('empresas',EmpresaController::class);
@@ -194,9 +199,6 @@ Route::group(['middleware' => ['auth']], function (){
 
 } );
 
-Route::post('/subscribe', 'SubscriptionController@subscribe');
-Route::get('/subscriptions', 'SubscriptionController@index');
-Route::post('/cancel-subscription', 'SubscriptionController@cancel');
 
 //Route::resource('tenant', TenantController::class);
 

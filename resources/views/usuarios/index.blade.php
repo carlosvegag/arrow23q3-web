@@ -70,13 +70,10 @@
                                             <button type="submit" style="cursor: pointer; background: transparent; border:0px;"><i class="material-icons text-danger">delete</i></button>
                                             {!! Form::close() !!}
                                             @endcan
-                                            <!-- @can('administrar-suscripcion')
-
-                                            @endcan -->
-                                            <form method="POST" action="{{ route('suscribirse') }}">
-                                                @csrf
+                                            <!--<form method="POST" action="{{ route('subscriptions', $usuario->id) }}">
+                                                @csrf-->
                                                 <button type="submit" style="cursor: pointer; background: #ffffff; border:0px;">Administrar Suscripción</button>
-                                            </form>
+                                            <!--</form>-->
                                         </td>
                                     
                                     </tr>
