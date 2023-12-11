@@ -135,6 +135,9 @@
                                                 <i class="material-icons mb-1">library_add</i>
                                                 </a>
                                                 @endcan 
+                                                <!--
+                                                
+                                                -->
                                                 <a href="{{route('conceptosec.show',$concepto->id)}}" class="btn  btn-raised btn-success waves-effect">
                                                 <i class="material-icons mb-1">format_list_bulleted</i>
                                                 </a>

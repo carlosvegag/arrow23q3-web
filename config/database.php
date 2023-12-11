@@ -59,7 +59,8 @@ return [
             'strict' => false,
             'engine' => null,
             'options' => extension_loaded('pdo_mysql') ? array_filter([
-                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+                PDO::MYSQL_ATTR_SSL_CA     => env('SSL_CERT_PATH'),
+                PDO::MYSQL_ATTR_SSL_KEY    => env('SSL_KEY_PATH'),
             ]) : [],
         ],
 

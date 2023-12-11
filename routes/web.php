@@ -34,6 +34,7 @@ use App\Http\Controllers\FirmanteController;
 use App\Http\Controllers\SubscriptionController;
 //PayPal
 use App\Http\Controllers\Payments\PayPalController;
+use App\Http\Controllers\pagarUsuarioController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -65,14 +66,20 @@ Route::group(['middleware' => ['auth']], function (){
     Route::resource('roles',RolController::class);
     Route::resource('usuarios',UsuarioController::class);
 /*Rutas para las suscripciones*/
+
+
+    Route::post('usuarios/subscriptions', [pagarUsuarioController::class, 'procesar'])->name('usuarios.procesar');
+    Route::post('usuarios/procesar-pago/{usuario_id}', [PaypalController::class, 'createSubscription'])->name('usuarios.procesar-pago');
+
+    Route::post('usuarios/administrar-suscripcion/{sub_id}', [SubscriptionController::class, 'administrarSuscripcion']);
+    Route::post('usuarios/renovar-suscripcion/{sub_id}', [PaypalController::class, 'renovarSuscripcion'])->name('renovar-suscripcion');
+    Route::post('usuarios/cancelar-suscripcion/{sub_id}', [PaypalController::class, 'cancelSubscription']);
     
-    Route::post('/subscriptions/{usuario}', 'PagarUsuarioController@procesar')->name('procesar.usuario');
-    Route::post('/administrar-suscripcion/{sub_id}', 'AdministrarController@procesar')->name('administrar.suscripcion');
-    Route::post('/renovar-suscripcion/{sub_id}', 'RenovarController@procesar')->name('administrar.suscripcion');
-    Route::post('/procesar-pago/{usuarioid}', [PayPalController::class, 'createSubscription']);
-
     //Route::post('/procesar-pago/{usuarioId}', [PaymentController::class, 'subscribe']);
-
+    Route::get('subirdatos/subir', function () {
+        return view('subirdatos.subirxlsx');
+    });
+    Route::post('subirdatos/procesar-archivo', [ImportController::class, 'procesarArchivo'])->name('procesar.archivo');
     //Route::post('/administrar-suscripcion/{usuario}')
 
 

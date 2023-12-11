@@ -244,5 +244,11 @@ return [
         'GoogleMaps' => GoogleMaps\Facade\GoogleMapsFacade::class,
 
     ],
-
+    
+    'http' => [
+        'verify' => env('APP_ENV') !== 'local',
+    ],
+    
 ];
+
+

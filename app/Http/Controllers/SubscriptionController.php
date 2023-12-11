@@ -1,42 +1,32 @@
 <?php
 
+// TuControlador.php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use PayPal\Rest\ApiContext;
-use PayPal\Auth\OAuthTokenCredential;
-use PayPal\Api\Agreement;
-use PayPal\Api\Plan;
-use PayPal\Api\Payer;
-use PayPal\Api\Payment;
-use PayPal\Api\RedirectUrls;
-
-class SubscriptionController extends Controller {
-    public function createSubscription(Request $request) {
-        // Configura la API de PayPal
-        $apiContext = new ApiContext(new OAuthTokenCredential(
-            config('services.paypal.client_id'),
-            config('services.paypal.secret')
-        ));
-        // Obtener datos del formulario
-        $userData = $request->all(); // Recopilar datos del usuario desde el formulario
-        // Crear una suscripción en PayPal
-        // Utilizar la SDK de PayPal para enviar una solicitud a la API de PayPal
-        // Procesar la respuesta de PayPal
-        // Puede implicar redirecciones, manejo de errores, almacenamiento de datos, etc.
-        return view('subscription.success'); // Redirigir al usuario a una página de confirmación
-    }
-    public function showSubscriptionForm()
+class SubscriptionController extends Controller
+{
+    public function administrarSuscripcion($sub_id)
     {
-        return view('usuarios.editar'); 
-    }
+        // Consultar la suscripción directamente en la base de datos
+        $suscripcion = DB::table('subscriptions')->where('idsuscriptions', $sub_id)->first();
+        if (is_null($suscripcion)) {
+            // Manejar el caso cuando no se encuentra la suscripción
+            abort(404); // Puedes personalizar esto según tus necesidades
+        }
+        // Formatear los datos para la vista
+        $datosVista = [
+            'precio' => $suscripcion->precio,
+            'date_started_at' => $suscripcion->date_started_at,
+            'date_ends_on' => $suscripcion->date_ends_on,
+            'renewal' => $suscripcion->renewal == 1 ? "SI" : "NO",
+        ];
 
-    public function listSubscriptions()
-    {
-        // Lógica para listar las suscripciones existentes
+        // Renderizar la vista con los datos
+        return view('administrar', $datosVista);
     }
-
 }
 
 

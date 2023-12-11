@@ -31,8 +31,12 @@ return [
     ],
     
     'paypal' => [
+        'settings' => [
+            'mode' => env('PAYPAL_MODE', 'sandbox'),
+            'http.ConnectionTimeOut' => 30,
+            // Otras configuraciones según tus necesidades
+        ],
         'client_id' => env('PAYPAL_CLIENT_ID'),
-        'secret' => env('PAYPAL_SECRET'),
-    ],    
-
+        'secret' => env('PAYPAL_CLIENT_SECRET'),
+    ],
 ];

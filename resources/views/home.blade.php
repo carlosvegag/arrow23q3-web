@@ -155,6 +155,9 @@
             </div>
 
             @elseif($rol->name=="Responsable de empresa")
+
+            
+
             <div class="col-lg-3 col-md-6 col-sm-12">
                 <div class="card">
                     <div class="body">
@@ -211,6 +214,13 @@
        
                 </div>
             </div>
+            <!--
+                botón de subir datos a BD
+            -->
+            <div>
+                <!--botón para subir datos en archivo de excel-->
+                <a href="{{ url('subirdatos/subir') }}" class="btn btn-raised g-bg-blush2">Subir Datos con hoja de cálculo</a>
+            </div>
             @elseif($rol->name=="Responsable de obra")
             <div class="col-lg-5 col-md-6 col-sm-12">
                 <div class="card">
@@ -231,6 +241,7 @@
        
                 </div>
             </div>
+            
             @elseif($rol->name=="Asistente de obra")
             <div class="col-lg-5 col-md-6 col-sm-12">
                 <div class="card">

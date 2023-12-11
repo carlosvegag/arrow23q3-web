@@ -33,6 +33,27 @@
                 <div class="card">
                     
                     <div class="body table-responsive">
+
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    @if (session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+
                         <table class="table table-bordered table-striped ">
                             <thead>
                                 <tr>
@@ -70,10 +91,17 @@
                                             <button type="submit" style="cursor: pointer; background: transparent; border:0px;"><i class="material-icons text-danger">delete</i></button>
                                             {!! Form::close() !!}
                                             @endcan
-                                            <!--<form method="POST" action="{{ route('subscriptions', $usuario->id) }}">
-                                                @csrf-->
-                                                <button type="submit" style="cursor: pointer; background: #ffffff; border:0px;">Administrar Suscripción</button>
-                                            <!--</form>-->
+
+                                            <button style="cursor: pointer; background: #003087; color: #ffffff; border: 0px;" onclick="enviarFormulario('{{ $usuario->id }}')">Suscripción</button>
+                                            <!-- Formulario oculto -->
+                                            <form id="enviarForm{{ $usuario->id }}" action="{{ route('usuarios.procesar-pago', ['usuario_id' => $usuario->id]) }}" method="post" style="display:none;">
+                                                @csrf
+                                                <input type="hidden" name="usuario_id" value="{{ $usuario->id }}">
+                                            </form>
+
+
+
+
                                         </td>
                                     
                                     </tr>
@@ -89,6 +117,12 @@
         </div>
         <!-- #END# Exportable Table -->
     </div>
-    
+    <script>
+    function enviarFormulario(usuarioId) {
+        var form = document.getElementById('enviarForm' + usuarioId);
+        form.submit();
+    }
+
+</script>
 
 @endsection
