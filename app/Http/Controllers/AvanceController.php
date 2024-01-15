@@ -128,6 +128,7 @@ class AvanceController extends Controller
         return view("avances.show",compact('avance','imgc','imgco','unidad','avancef','dato','p','imagenesavances'));
     }
 
+    
     /**
      * Show the form for editing the specified resource.
      *

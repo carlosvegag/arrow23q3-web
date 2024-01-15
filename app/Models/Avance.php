@@ -9,10 +9,17 @@ class Avance extends Model
 {
     use HasFactory;
 
-    protected $fillable=[
+    protected $fillable = [
         'inicio',
         'fin',
-        'id_concepto'
-        
+        'id_concepto',
+        'localizacion',
+        'altura',
+        'anchoM',
+        'anchoP',
+        'volumenT',
+        'pieza',
+        'espesor',
+        'area',
     ];
 }

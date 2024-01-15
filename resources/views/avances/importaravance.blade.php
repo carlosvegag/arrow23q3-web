@@ -41,41 +41,38 @@
                         <p>Para subir datos en un archivo XLSX debe estar estructurado de la siguiente manera: <br>
                         1-El formato debe ser en XLSX o CSV<br>2-Debe estructurarse de la siguiente manera: <br></p>
                         <ol>
-                            <li>
-                                <h2>Nombrar las Hojas:</h2>
-                                <p>Cada conjunto de datos debe estar en una hoja separada dentro de la hoja de cálculo. Asigna un nombre significativo a cada hoja, como "afianzadoras", "usuarios", "clientes", etc.</p>
-                            </li>
-                            <li>
-                                <h2>Columnas y Datos:</h2>
-                                <p>Asegúrate de que las columnas en cada hoja coincidan exactamente con las siguientes estructuras:</p>
+                            <li><strong>Preparar el Archivo:</strong>
                                 <ul>
-                                    <li><strong>Afianzadoras:</strong> nombre, rfc, razon_social, domicilio, telefono</li>
-                                    <li><strong>Clientes:</strong> nombre, telefono, email</li>
-                                    <li><strong>Contratos:</strong> contrato, nombre_obra, descripcion, fecha_alta, ubicacion, fecha_inicio, fecha_termino, plazo_dias, importe, amortizacion, estatus, id_cliente, id_empresa, id_responsable, id_asistente</li>
-                                    <li><strong>Unidades:</strong> nombre, descripcion</li>
-                                    <li><strong>Cargos:</strong> nombre, descripcion</li>
+                                    <li>Asegúrate de tener un archivo CSV o XLSX preparado con los datos que deseas importar.</li>
+                                    <li>Verifica que las columnas del archivo coincidan con la estructura que se espera para el modelo <code>Avance</code>.</li>
                                 </ul>
                             </li>
-                            <li>
-                                <h2>Formato de Fecha:</h2>
-                                <p>Para las columnas que contienen fechas (fecha_alta, fecha_inicio, fecha_termino), utiliza el formato "YYYY-MM-DD" para garantizar una interpretación precisa.</p>
+                            <li><strong>Acceder a la Página de Importación:</strong>
+                                <ul>
+                                    <li>Inicia sesión en la aplicación.</li>
+                                    <li>Navega a la página o sección dedicada a la importación de datos. Esto podría ser una sección dentro del panel de administración o una página específica destinada a la importación.</li>
+                                </ul>
                             </li>
-                            <li>
-                                <h2>Formato de Números:</h2>
-                                <p>Asegúrate de que las columnas numéricas (plazo_dias, importe, amortizacion) utilicen el formato numérico adecuado.</p>
+                            <li><strong>Seleccionar el Archivo:</strong>
+                                <ul>
+                                    <li>Dentro de la página de importación, deberías encontrar una opción para seleccionar el archivo. Busca un botón o un área que te permita cargar tu archivo CSV o XLSX.</li>
+                                </ul>
                             </li>
-                            <li>
-                                <h2>Guardar el Archivo:</h2>
-                                <p>Guarda el archivo en formato CSV o XLSX según tu preferencia.</p>
+                            <li><strong>Cargar el Archivo:</strong>
+                                <ul>
+                                    <li>Haz clic en el botón de carga y selecciona el archivo preparado desde tu dispositivo.</li>
+                                </ul>
                             </li>
-                            <li>
-                                <h2>Cargar el Archivo:</h2>
-                                <p>Utiliza el botón de carga correspondiente en la plataforma para seleccionar y cargar tu archivo preparado.</p>
+                            <li><strong>Esperar el Procesamiento:</strong>
+                                <ul>
+                                    <li>Después de cargar el archivo, la aplicación puede llevar a cabo el procesamiento de los datos. Este proceso puede llevar algún tiempo dependiendo de la cantidad de datos que estás importando.</li>
+                                </ul>
                             </li>
                         </ol>
-                        <form action="{{ route('procesar.archivo') }}" method="post" enctype="multipart/form-data">
+                        <form action="{{ url('Avances/importar-avances') }}" method="post" enctype="multipart/form-data">
                             @csrf
-                            <input type="file" name="archivo" id="archivo" class="btn btn-raised g-bg-blush2" required>
+                            <input type="file" name="file" id="file" class="btn btn-raised g-bg-blush2" required>
+                            <input type="hidden" name="avance_id" value="{{ $avancef->id }}">
                             <br>
                             <button type="submit" class="btn btn-raised g-bg-blush2">Subir Archivo</button>
                         </form>
@@ -86,3 +83,10 @@
     </div>
 </div>
 @endsection
+@if (isset($scripts))
+public function showImportView($id)
+{
+    // Puedes hacer algo con $id si es necesario antes de mostrar la vista
+    return view('importaravance', ['id' => $id]);
+}
+@endif

@@ -9,17 +9,17 @@ class CreateSubscriptionsTable extends Migration
     public function up()
     {
         Schema::create('subscriptions', function (Blueprint $table) {
-            // Estructura de la base de datos
-            $table->id('idsuscriptions');
-            $table->unsignedBigInteger('user_id');
-            $table->integer('precio');
-            $table->dateTime('date_started_at');
-            $table->dateTime('date_ends_on');
-            $table->tinyInteger('renewal');
-            $table->dateTime('finish_at');
-            $table->dateTime('renewed_cancelled_at');
+            $table->id();
+            $table->string('paypal_plan_id')->unique();
+            $table->bigInteger('user_id')->unsigned();
+            $table->integer('price');
+            $table->datetime('date_started_at');
+            $table->datetime('date_ends_on');
+            $table->tinyInteger('auto_renewal');
+            $table->datetime('cancelled_at')->nullable();
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users');
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
     public function down()

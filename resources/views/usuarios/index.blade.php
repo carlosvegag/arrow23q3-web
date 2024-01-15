@@ -92,18 +92,13 @@
                                             {!! Form::close() !!}
                                             @endcan
 
-                                            <button style="cursor: pointer; background: #003087; color: #ffffff; border: 0px;" onclick="enviarFormulario('{{ $usuario->id }}')">Suscripción</button>
+                                            <button style="cursor: pointer; background: #003087; color: #ffffff; border: 0px;" type="button" onclick="enviarFormulario('{{ $usuario->id }}')">Suscripción</button>
                                             <!-- Formulario oculto -->
-                                            <form id="enviarForm{{ $usuario->id }}" action="{{ route('usuarios.procesar-pago', ['usuario_id' => $usuario->id]) }}" method="post" style="display:none;">
+                                            <form id="enviarForm{{ $usuario->id }}" action="{{ route('usuarios.procesar', ['usuario_id' => $usuario->id]) }}" method="post" style="display:none;">
                                                 @csrf
                                                 <input type="hidden" name="usuario_id" value="{{ $usuario->id }}">
                                             </form>
-
-
-
-
                                         </td>
-                                    
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -119,10 +114,12 @@
     </div>
     <script>
     function enviarFormulario(usuarioId) {
-        var form = document.getElementById('enviarForm' + usuarioId);
-        form.submit();
+        // Obtener el formulario
+        var formulario = document.getElementById('enviarForm' + usuarioId);
+
+        // Modificar el método del formulario a POST y enviar
+        formulario.method = 'post';
+        formulario.submit();
     }
-
 </script>
-
 @endsection

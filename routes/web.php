@@ -22,6 +22,7 @@ use App\Http\Controllers\ContratosResponsableController;
 use App\Http\Controllers\FianzaController;
 use App\Http\Controllers\ImagenContratoController;
 use App\Http\Controllers\ReporteController;
+use App\Http\Controllers\ImportController;
 
 use App\Models\Avance;
 
@@ -68,20 +69,20 @@ Route::group(['middleware' => ['auth']], function (){
 /*Rutas para las suscripciones*/
 
 
-    Route::post('usuarios/subscriptions', [pagarUsuarioController::class, 'procesar'])->name('usuarios.procesar');
-    Route::post('usuarios/procesar-pago/{usuario_id}', [PaypalController::class, 'createSubscription'])->name('usuarios.procesar-pago');
-
-    Route::post('usuarios/administrar-suscripcion/{sub_id}', [SubscriptionController::class, 'administrarSuscripcion']);
+    Route::post('usuarios/procesar', [pagarUsuarioController::class, 'procesar'])->name('usuarios.procesar');
     Route::post('usuarios/renovar-suscripcion/{sub_id}', [PaypalController::class, 'renovarSuscripcion'])->name('renovar-suscripcion');
-    Route::post('usuarios/cancelar-suscripcion/{sub_id}', [PaypalController::class, 'cancelSubscription']);
+    Route::post('usuarios/cancelar-suscripcion/{sub_id}', [PaypalController::class, 'cancelSubscription'])->name('usuarios.cancelar');
+    Route::match(['get', 'post'], 'paypal/procesar-pago', [PaypalController::class, 'createSubscription'])->name('paypal.procesar-pago');
+    Route::post('paypal/execute', [PaypalController::class, 'executePayment'])->name('paypal.execute');
+    Route::view('paypal/success/{approval_url}', 'paypal-redirect')->name('paypal.success');
     
     //Route::post('/procesar-pago/{usuarioId}', [PaymentController::class, 'subscribe']);
     Route::get('subirdatos/subir', function () {
         return view('subirdatos.subirxlsx');
     });
     Route::post('subirdatos/procesar-archivo', [ImportController::class, 'procesarArchivo'])->name('procesar.archivo');
+    
     //Route::post('/administrar-suscripcion/{usuario}')
-
 
     Route::resource('empresas',EmpresaController::class);
     Route::resource('afianzadoras',AfianzadoraController::class);
@@ -147,6 +148,11 @@ Route::group(['middleware' => ['auth']], function (){
 
        
     Route::resource('Avance',AvanceController::class);
+//avances por xlsx
+    Route::post('Avances/importar-avances', [ImportController::class, 'procesarAvances']);
+
+    //ir a la vista
+    Route::get('Avance/importaravance/{avancef}', [ImportController::class, 'showImportView']);
 
     Route::get('agregarf/{id}/fecha',[AvanceController::class,'agregarf'])->name('crearf');
 

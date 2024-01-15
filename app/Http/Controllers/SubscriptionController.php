@@ -1,21 +1,22 @@
 <?php
 
-// TuControlador.php
-
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class SubscriptionController extends Controller
 {
-    public function administrarSuscripcion($sub_id)
+    public function administrarSuscripcion()
     {
+        
         // Consultar la suscripción directamente en la base de datos
-        $suscripcion = DB::table('subscriptions')->where('idsuscriptions', $sub_id)->first();
+        $suscripcion = DB::table('subscriptions')->where('idsubscriptions', $sub_id)->first();
         if (is_null($suscripcion)) {
             // Manejar el caso cuando no se encuentra la suscripción
             abort(404); // Puedes personalizar esto según tus necesidades
         }
+
         // Formatear los datos para la vista
         $datosVista = [
             'precio' => $suscripcion->precio,
@@ -25,11 +26,9 @@ class SubscriptionController extends Controller
         ];
 
         // Renderizar la vista con los datos
-        return view('administrar', $datosVista);
+        return view('usuarios.administrar', $datosVista);
     }
 }
-
-
 
 
     

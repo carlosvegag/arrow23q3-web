@@ -32,7 +32,7 @@
             </div>
             <div>
                 {{-- @can('editar-perfil') --}}
-                <a href="{{route('perfil.edit', $usuario->id) }}" class="btn btn-raised btn-primary">Editar</a>
+                <a href="{{ $usuario ? route('perfil.edit', $usuario->id) : '#' }}" class="btn btn-raised btn-primary">Editar</a>
                 {{-- @endcan --}}
             </div>
 
@@ -50,15 +50,18 @@
                     <h2>Información personal</h2>
                 </div>
                 <div class="body">
+                @if (!is_null($usuario))
                     <strong>Nombre:</strong>
                     <p>{{$usuario->name}}</p>
                     <strong>Rol</strong>
                     <p>{{$rol->name}}</p>
                     <strong>Email</strong>
                     <p>{{$usuario->email}}</p>
-
                     <hr>
-
+                    @else
+                    <!-- Manejo de error o asignación predeterminada -->
+                    <p>no pasó el usuario</p>
+                    @endif
                 </div>
             </div>
         </div>

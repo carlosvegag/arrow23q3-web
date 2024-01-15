@@ -45,7 +45,6 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '3306'),
             'database' => env('DB_DATABASE', 'forge'),
@@ -55,14 +54,17 @@ return [
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
-            'prefix_indexes' => true,
             'strict' => false,
             'engine' => null,
             'options' => extension_loaded('pdo_mysql') ? array_filter([
-                PDO::MYSQL_ATTR_SSL_CA     => env('SSL_CERT_PATH'),
-                PDO::MYSQL_ATTR_SSL_KEY    => env('SSL_KEY_PATH'),
+                //PDO::MYSQL_ATTR_SSL_CA     => env('DB_SSL_CA_PATH'),
+                //PDO::MYSQL_ATTR_SSL_CERT   => env('DB_SSL_CERT_PATH'),
+                //PDO::MYSQL_ATTR_SSL_KEY    => env('DB_SSL_KEY_PATH'),
+                //quitar este ajuste una vez subido al servidor
+                PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
             ]) : [],
         ],
+        
 
         'pgsql' => [
             'driver' => 'pgsql',
